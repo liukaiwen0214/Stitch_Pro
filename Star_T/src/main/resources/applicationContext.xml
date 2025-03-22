@@ -38,7 +38,7 @@
     </bean>
 
     <!-- 启动声明式事务驱动 -->
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven/>
 
 
     <!-- spring 通过 sqlSessionFactoryBean 获取 sqlSessionFactory 工厂类 -->
