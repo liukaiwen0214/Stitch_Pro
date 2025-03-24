@@ -9,6 +9,18 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    public UserEntity(String user_email, String user_password) {
+        this.user_email = user_email;
+        this.user_password = user_password;
+    }
+
+    public UserEntity(String user_email, String story_1, String user_password) {
+        this.user_email = user_email;
+        this.story_1 = story_1;
+        this.user_password = user_password;
+    }
+
+
     public UserEntity(int user_id, String user_email, String user_password, String story_1) {
         this.user_id = user_id;
         this.user_email = user_email;

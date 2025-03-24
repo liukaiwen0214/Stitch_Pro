@@ -5,7 +5,7 @@
   Time: 下午6:49
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <html>
 <head>
     <title>Title</title>
@@ -21,15 +21,13 @@
 
     <form id="loginForm">
         <div class="form-group">
-            <label for="email"></label><input type="email"
-                                              id="email"
-                                              placeholder="电子邮箱"
-                                              required>
+            <label for="email"></label>
+            <input type="email" id="email" name="email" placeholder="电子邮箱" required>
         </div>
 
         <div class="form-group">
             <label for="password"></label>
-            <input type="password" id="password" placeholder="密码" minlength="6" required>
+            <input type="password" id="password" name="password" placeholder="密码" required>
         </div>
 
         <div class="forgot-password">
@@ -44,5 +42,6 @@
     </div>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/star_login.js"></script>
 </html>

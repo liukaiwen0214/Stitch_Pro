@@ -7,7 +7,7 @@
 
     <!--配置欢迎界面-->
     <welcome-file-list>
-<!--                        <welcome-file>index.jsp</welcome-file>-->
+<!--                        <welcome-file>Star_Home.jsp</welcome-file>-->
         <welcome-file>/WEB-INF/templates/Star_Login.jsp</welcome-file>
     </welcome-file-list>
 
