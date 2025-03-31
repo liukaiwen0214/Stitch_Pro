@@ -13,8 +13,8 @@ public class UserServiceImpl implements UserService {
     private UserEntityMapper userEntityMapper;
 
     @Override
-    public int user_login(String email, String password) {
-        return userEntityMapper.getUserEntity(email, password);
+    public boolean loginValidate(String email, String password) {
+        return "admin@126.com".equals(email) && "123456".equals(password);
     }
 
     @Override

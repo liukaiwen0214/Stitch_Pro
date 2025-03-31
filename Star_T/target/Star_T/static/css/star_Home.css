@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #FFFFFF;
+    align-items: center;
+    min-height: 100vh;
+}
+#Left_Bast_1{
+    position:fixed;
+    width:250px;
+    height:100%;
+    background-color: #FCFCFC;
+    border-right:1px solid #F4F4F4;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index:1;
+}
+.Left_Menu{
+    width:100%;
+    margin-bottom: 20px;
+    /* 防止内部元素撑大 div */
+    max-width: 100%;
+    word-wrap: break-word;
+    border:1px solid #cb1d1d;
+    /* 使用 flexbox 布局 */
+    display: flex;
+    /* 垂直居中 */
+    align-items: center;
+    padding-left: 20px;
+    min-height: 45px; /* 可根据需要调整最小高度 */
+}

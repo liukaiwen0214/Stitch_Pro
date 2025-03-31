@@ -22,18 +22,17 @@
     <form id="loginForm">
         <div class="form-group">
             <label for="email"></label>
-            <input type="email" id="email" name="email" placeholder="电子邮箱" required>
+            <input type="email" id="email" name="email" placeholder="请输入账户" required>
         </div>
 
         <div class="form-group">
             <label for="password"></label>
-            <input type="password" id="password" name="password" placeholder="密码" required>
+            <input type="password" id="password" name="password" placeholder="请输入密码" required>
         </div>
 
         <div class="forgot-password">
             <a href="#">忘记密码？</a>
         </div>
-
         <button type="submit">登录</button>
     </form>
 
