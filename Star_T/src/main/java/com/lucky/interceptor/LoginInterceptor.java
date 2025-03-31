@@ -1,5 +1,6 @@
 package com.lucky.interceptor;
 
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, @Nonnull HttpServletResponse response,  @Nonnull Object handler) throws Exception {
         logger.info("PreHandle method is called for URL: {}", request.getRequestURL());
         String uri = request.getRequestURI();
         HttpSession session = request.getSession();
