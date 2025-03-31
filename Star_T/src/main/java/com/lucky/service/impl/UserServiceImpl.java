@@ -1,6 +1,6 @@
 package com.lucky.service.impl;
 
-import com.lucky.entity.UserEntity;
+
 import com.lucky.mapper.UserEntityMapper;
 import com.lucky.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
