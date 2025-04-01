@@ -5,6 +5,7 @@ import com.lucky.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +65,11 @@ public class Star_FirstController {
 
 
     @RequestMapping("/Star_Home")
-    public String showHomePage() {
+    public String showHomePage(HttpSession session, Model model) {
+        Object user = session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
         return "/Star_Home"; // 对应视图解析器配置的 JSP 文件名
     }
 }
