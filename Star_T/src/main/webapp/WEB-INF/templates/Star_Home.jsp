@@ -96,10 +96,20 @@
             </div>
         </a>
 
-        <div class="info">
-            <div class="info__title">当前登陆人：${user}</div>
+        <div class="notifications-container">
+            <div class="success">
+                <div class="success-prompt-wrap">
+                    <p class="success-prompt-heading">
+                        当前登陆人：${user}
+                    </p>
+                    <div class="success-button-container">
+                        <button class="success-button-main" type="button">退出登陆</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        
+
+
     </div>
 
     <div id="Top_Bast_1">
@@ -110,8 +120,26 @@
     <div id="context-d">
 
     </div>
+
+
+    <div class="error" id="closeLogin">
+        <div class="error__icon">
+            <svg x="1743582710277" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="8070" width="24" height="24">
+                <path d="M965.818182 517.317818C965.818182 764.357818 760.901818 965.818182 506.682182 965.818182 261.352727 965.818182 58.181818 762.647273 58.181818 517.317818 58.181818 263.098182 259.642182 58.181818 506.682182 58.181818 762.647273 58.181818 965.818182 261.352727 965.818182 517.317818z m-46.545455 0C919.272727 287.069091 736.930909 104.727273 506.682182 104.727273 285.521455 104.727273 104.727273 288.64 104.727273 517.317818 104.727273 736.930909 287.069091 919.272727 506.682182 919.272727 735.36 919.272727 919.272727 738.478545 919.272727 517.317818z m-620.951272 23.063273a5.655273 5.655273 0 0 1-0.453819-7.086546l19.386182-26.379636a4.608 4.608 0 0 1 6.434909-0.942545l115.328 88.389818a6.027636 6.027636 0 0 0 7.307637-0.209455l280.541091-233.704727a5.271273 5.271273 0 0 1 6.888727 0.186182l18.397091 18.152727a4.573091 4.573091 0 0 1-0.046546 6.469818L445.986909 686.545455a4.596364 4.596364 0 0 1-6.516364-0.081455l-141.14909-146.071273z"
+                      fill="#09BB07" p-id="8071"></path>
+            </svg>
+        </div>
+        <div class="error__title" id="welcome"></div>
+        <div class="error__close"  onclick="welcome_close()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
+                <path fill="#393a37"
+                      d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
+            </svg>
+        </div>
+    </div>
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/star-login-scripts.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
 </html>

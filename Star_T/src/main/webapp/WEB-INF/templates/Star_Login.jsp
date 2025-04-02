@@ -16,6 +16,9 @@
     <div class="logo">
         <div class="login_logo"></div>
     </div>
+    <div id="progress-loader" class="progress-loader">
+        <div id="progress" class="progress"></div>
+    </div>
 
     <h1>欢迎回来</h1>
 
