@@ -10,12 +10,18 @@ document.getElementById('loginForm').onsubmit = function(e) {
     // 显示进度条
     const progressBar = document.getElementById('progress-loader');
     const progress = document.getElementById('progress');
+    // 监听 pageshow 事件，重置进度条状态
+    window.addEventListener('pageshow', function() {
+        progressBar.style.display = 'none';
+        progress.style.width = '0%';
+    });
     progressBar.style.display = 'block';
     let width = 0;
     const interval = setInterval(() => {
         if (width >= 100) {
             clearInterval(interval);
             // 进度条完成后跳转到主页
+            history.pushState({}, 'Home', requestUrl + '/Star_Home');
             window.location.href = requestUrl + '/Star_Home';
         } else {
             width++;

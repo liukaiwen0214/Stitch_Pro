@@ -196,3 +196,23 @@ svg {
 .error__close path {
     fill: #fff;
 }
+
+/* 从右侧划入动画 */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+#closeLogin {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+#closeLogin {
+    animation-name: slideInRight;
+}
