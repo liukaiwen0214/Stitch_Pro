@@ -36,15 +36,12 @@ body {
     width: 100%;
     margin-bottom: 35px;
     margin-top: 10px;
-    /* Ã©ËœÂ²Ã¦Â­Â¢Ã¥â€ â€¦Ã©Æ’Â¨Ã¥â€¦Æ’Ã§Â´Â Ã¦â€™â€˜Ã¥Â¤Â§ div */
+
     max-width: 100%;
     word-wrap: break-word;
-    /* border:1px solid #cb1d1d; */
-    /* Ã¤Â½Â¿Ã§â€Â¨ flexbox Ã¥Â¸Æ’Ã¥Â±â‚¬ */
     display: flex;
-    /* Ã¥Å¾â€šÃ§â€ºÂ´Ã¥Â±â€¦Ã¤Â¸Â­ */
     align-items: center;
-    min-height: 40px; /* Ã¥ÂÂ¯Ã¦Â Â¹Ã¦ÂÂ®Ã©Å“â‚¬Ã¨Â¦ÂÃ¨Â°Æ’Ã¦â€¢Â´Ã¦Å“â‚¬Ã¥Â°ÂÃ©Â«ËœÃ¥ÂºÂ¦ */
+    min-height: 40px;
     transition: all 0.3s;
     border-radius: 8px;
 }
@@ -109,6 +106,8 @@ svg {
     transition: all 0.3s ease;
     border: 1px solid rgba(74, 222, 128, 0.2);
     height:100px;
+    position:fixed;
+    top:87%;
 }
 
 .success:hover {
