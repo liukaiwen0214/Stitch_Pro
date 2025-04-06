@@ -23,7 +23,7 @@ body {
 
 #Left_Bast_1 {
     position: fixed;
-    width: 250px;
+    width: 13%;
     height: 100%;
     background-color: #FCFCFC;
     border-right: 1px solid #F4F4F4;
@@ -36,7 +36,6 @@ body {
     width: 100%;
     margin-bottom: 35px;
     margin-top: 10px;
-
     max-width: 100%;
     word-wrap: break-word;
     display: flex;
@@ -87,7 +86,7 @@ svg {
     position: fixed;
     border-bottom: 1px solid #F4F4F4;
     width: 100%;
-    height: 50px;
+    height: 5.5%;
 }
 
 .notifications-container {
@@ -214,4 +213,12 @@ svg {
 
 #closeLogin {
     animation-name: slideInRight;
+}
+#context-d{
+    position:fixed;
+    display:flex;
+    width:87%;
+    height:94.5%;
+    top:50px;
+    left:250px;
 }

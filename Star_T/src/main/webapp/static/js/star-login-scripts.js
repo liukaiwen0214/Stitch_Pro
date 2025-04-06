@@ -22,6 +22,7 @@ document.getElementById('loginForm').onsubmit = function(e) {
             clearInterval(interval);
             // 进度条完成后跳转到主页
             history.pushState({}, 'Home', requestUrl + '/Star_Home');
+            
             window.location.href = requestUrl + '/Star_Home';
         } else {
             width++;

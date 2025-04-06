@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             logout();
         });
     }
+    document.getElementById("home-a").click();
 });
 
 
@@ -36,5 +37,17 @@ function logout() {
 function welcome_close() {
     const closeLogin = document.getElementById('closeLogin');
     closeLogin.style.display = 'none';
+}
+
+// 使用 AJAX 加载页面内容
+function topUrl(url) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', requestUrl+url, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            document.getElementById('context-d').innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
 }
 
