@@ -77,4 +77,8 @@ public class Star_FirstController {
     public String showHomePage() {
         return "/Star_Context";
     }
+    @RequestMapping("/other")
+    public String other() {
+        return "/other";
+    }
 }

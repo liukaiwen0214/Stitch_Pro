@@ -160,7 +160,10 @@ svg {
     top:12px;
     left:88%;
 }
-
+/* 让没有 href 属性的 a 标签鼠标悬浮时变成手型 */
+a:not([href]) {
+    cursor: pointer;
+}
 .error__icon {
     position:relative;
     left:-3%;
@@ -221,4 +224,7 @@ svg {
     height:94.5%;
     top:50px;
     left:250px;
+}
+iframe{
+    border:none;
 }
