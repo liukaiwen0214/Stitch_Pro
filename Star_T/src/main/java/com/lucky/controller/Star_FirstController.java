@@ -1,6 +1,7 @@
 package com.lucky.controller;
 
 
+import com.lucky.service.CharactersService;
 import com.lucky.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class Star_FirstController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private CharactersService charactersService;
 
     // 登录接口
     @PostMapping("/login")
@@ -73,12 +77,20 @@ public class Star_FirstController {
         return "/Star_Home"; // 对应视图解析器配置的 JSP 文件名
     }
 
-    @RequestMapping("/homePage")
-    public String showHomePage() {
+    @RequestMapping("/home_context")
+    public String showHome_context(Model model) {
         return "/Star_Context";
     }
     @RequestMapping("/other")
     public String other() {
         return "/other";
+    }
+
+    @GetMapping("/countCharactersByRarity")
+    @ResponseBody
+    public List<Map<String, Object>> countCharactersByRarity(Model model) {
+        List<Map<String, Object>> charactersByRarity = charactersService.countCharactersByRarity();
+        model.addAttribute("charactersByRarity", charactersByRarity);
+        return charactersByRarity;
     }
 }

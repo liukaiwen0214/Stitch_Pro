@@ -23,7 +23,7 @@ body {
 
 #Left_Bast_1 {
     position: fixed;
-    width: 13%;
+    width: 250px;
     height: 100%;
     background-color: #FCFCFC;
     border-right: 1px solid #F4F4F4;
@@ -86,7 +86,7 @@ svg {
     position: fixed;
     border-bottom: 1px solid #F4F4F4;
     width: 100%;
-    height: 5.5%;
+    height: 50px;
 }
 
 .notifications-container {
@@ -219,6 +219,7 @@ a:not([href]) {
 }
 #context-d{
     position:fixed;
+    /* border:red 1px solid; */
     display:flex;
     width:87%;
     height:94.5%;

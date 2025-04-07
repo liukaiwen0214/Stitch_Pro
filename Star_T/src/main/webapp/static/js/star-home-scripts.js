@@ -69,7 +69,6 @@ function topUrl(url) {
 
 
 const menu_div = document.querySelectorAll('.Left_Menu');
-console.log(menu_div);
 function removeBgColor(){
     menu_div.forEach(div => {
         div.style.backgroundColor = '';
