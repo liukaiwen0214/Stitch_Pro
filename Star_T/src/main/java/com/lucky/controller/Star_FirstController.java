@@ -72,4 +72,13 @@ public class Star_FirstController {
         }
         return "/Star_Home"; // 对应视图解析器配置的 JSP 文件名
     }
+
+    @RequestMapping("/homePage")
+    public String showHomePage() {
+        return "/Star_Context";
+    }
+    @RequestMapping("/other")
+    public String other() {
+        return "/other";
+    }
 }

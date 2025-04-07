@@ -5,7 +5,6 @@ const requestUrl_overall = '/' + contextPath_overall;
 
 // 监听 popstate 事件
 window.addEventListener('popstate', function (e) {
-    console.log('requestUrl_overall');
     const currentPath = window.location.pathname;
     const targetPath = new URL(document.referrer).pathname;
     if (targetPath.includes(`${requestUrl_overall}/login`)) {
