@@ -3,6 +3,7 @@ package com.lucky.controller;
 
 import com.lucky.service.CharactersService;
 import com.lucky.service.UserService;
+import com.lucky.util.AiChat;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,5 +93,18 @@ public class Star_FirstController {
         List<Map<String, Object>> charactersByRarity = charactersService.countCharactersByRarity();
         model.addAttribute("charactersByRarity", charactersByRarity);
         return charactersByRarity;
+    }
+
+    @PostMapping("/chat")
+    @ResponseBody
+    public Map<String, String> handleChatMessage(@RequestBody Map<String, String> request) {
+        AiChat aiChat = new AiChat();
+        String message = request.get("message");
+        List<String> responsived = aiChat.responsive(message);
+        Map<String, String> response = new HashMap<>();
+        for (String s : responsived) {
+            response.put("reply", s);
+        }
+        return response;
     }
 }

@@ -8,7 +8,6 @@ const requestUrl = '/' + contextPath;
 fetch(requestUrl + '/countCharactersByRarity')
     .then(response => response.json())
     .then(data => {
-        console.log('获取到的列表数据:', data);
         const echartsData = data.map(item => ({
             value: item.count,
             name: item.rarity
@@ -69,6 +68,19 @@ fetch(requestUrl + '/countCharactersByRarity')
             myChart.setOption(option);
         }
 
+
+// 添加点击事件
+        myChart.on('click', function (params) {
+            // params 包含了点击的数据项的相关信息
+            const name = params.name;
+            const value = params.value;
+
+            console.log(`你点击了 ${name}，数量为 ${value}`);
+            // 你可以在这里添加更复杂的逻辑，比如跳转到详情页等
+            // 例如：window.location.href = `detail.html?name=${name}`;
+        });
+
+
         window.addEventListener('resize', myChart.resize);
 
 
@@ -76,5 +88,4 @@ fetch(requestUrl + '/countCharactersByRarity')
     .catch(error => {
         console.error('获取列表数据时出错:', error);
     });
-
 
