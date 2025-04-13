@@ -23,7 +23,7 @@ body {
 
 #Left_Bast_1 {
     position: fixed;
-    width: 16rem;
+    width: 10%;
     height: 100%;
     background-color: #FCFCFC;
     border-right: 1px solid #F4F4F4;
@@ -84,7 +84,7 @@ svg {
     position: fixed;
     border-bottom: 1px solid #F4F4F4;
     width: 100%;
-    height: 3rem;
+    height: 4%;
 }
 
 .notifications-container {
@@ -211,12 +211,13 @@ a:not([href]) {
 }
 #context-d{
     position:fixed;
-    /* border:red 1px solid; */
+    border:red 1px solid;
     display:flex;
-    width:87%;
-    height:94.5%;
-    top:50px;
-    left:250px;
+    width:90%;
+    height:96%;
+    top:4%;
+    left:10%;
+    z-index:2;
 }
 iframe{
     border:none;
