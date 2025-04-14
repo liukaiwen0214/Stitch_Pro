@@ -14,11 +14,11 @@
     <div class="chat-container">
         <!-- 后台消息 -->
         <div class="message bot-message">
-            <p>这是后台消息。</p>
+            <p>我是Ai助手，请输入你的问题。</p>
         </div>
         <!-- 用户消息 -->
         <div class="message user-message">
-            <p>这是我的消息。</p>
+            <p>用户消息显示。</p>
         </div>
     </div>
     <div class="input-container">

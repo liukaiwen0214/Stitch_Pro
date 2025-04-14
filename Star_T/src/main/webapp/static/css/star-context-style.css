@@ -20,7 +20,7 @@ body {
 /* 整体容器样式 */
 .chat-container-wrapper {
     position:absolute;
-    left:62rem;
+    left:60%;
     top:1rem;
     width: 30%;
     height:95%;

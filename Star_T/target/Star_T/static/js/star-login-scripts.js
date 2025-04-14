@@ -20,15 +20,11 @@ document.getElementById('loginForm').onsubmit = function(e) {
     const interval = setInterval(() => {
         if (width >= 100) {
             clearInterval(interval);
-            // 进度条完成后跳转到主页
-            history.pushState({}, 'Home', requestUrl + '/Star_Home');
-            
-            window.location.href = requestUrl + '/Star_Home';
         } else {
             width++;
             progress.style.width = width + '%';
         }
-    }, 20); // 30ms 一次更新，共 3000ms（3 秒）
+    }, 20);
 
     // 发送登录请求
     fetch(requestUrl + '/login', {
@@ -37,7 +33,13 @@ document.getElementById('loginForm').onsubmit = function(e) {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.code !== 200) {
+            if (data.code === 200) {
+                // 登录成功，跳转到主页
+                clearInterval(interval);
+                progressBar.style.display = 'none';
+                progress.style.width = '0%';
+                window.location.href = requestUrl + data.redirectUrl;
+            } else {
                 // 登录失败，清除进度条并显示错误信息
                 clearInterval(interval);
                 progressBar.style.display = 'none';

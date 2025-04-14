@@ -48,7 +48,7 @@ function topUrl(url) {
     // 创建 XMLHttpRequest 对象
     const xhr = new XMLHttpRequest();
     // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
-    xhr.open('GET', requestUrl+url, true);
+    xhr.open('POST', requestUrl+url, true);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {

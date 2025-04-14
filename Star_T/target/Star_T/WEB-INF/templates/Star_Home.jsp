@@ -21,6 +21,12 @@
                 <span id="home-p" class="menu_p">主页</span>
             </div>
         </a>
+        <div class="dropdown-content">
+            <ul>
+                <li>子菜单 1-1</li>
+                <li>子菜单 1-2</li>
+            </ul>
+        </div>
         <%--式神录--%>
         <a class="menu-a" id="information-a" onclick="topUrl('/other')">
             <div class="Left_Menu" id="Left_Menu_2">
