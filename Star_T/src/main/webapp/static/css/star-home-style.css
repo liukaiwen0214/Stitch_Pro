@@ -226,8 +226,27 @@ iframe{
 /* 隐藏下拉内容 */
 .dropdown-content {
     display: none;
+    overflow: hidden;
 }
-
-.dropdown-content.show {
-    display: block;
+ul{
+    list-style: none;
+}
+li{
+    position:sticky;
+    margin-top: 0.5rem;
+    max-width: 100%;
+    word-wrap: break-word;
+    display: flex;
+    left:100px;
+    align-items: center;
+    min-height: 40px;
+    transition: all 0.3s;
+    border-radius: 8px;
+}
+li>span{
+    padding-left:2rem;
+}
+.selected {
+    background-color: #F5F5F5; /* 选中状态的背景颜色 */
+    transition: background-color 0.3s ease;
 }

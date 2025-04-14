@@ -45,38 +45,74 @@ function welcome_close() {
 }
 
 const Menu = document.querySelectorAll(".menu-a")
-Menu.forEach(menu_click =>{
-    menu_click.addEventListener("click", function(){
+Menu.forEach(menu_click => {
+    menu_click.addEventListener("click", function () {
         const customValue = menu_click.getAttribute('data-custom');
-        // 创建 XMLHttpRequest 对象
-        const xhr = new XMLHttpRequest();
-        // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
-        xhr.open('GET', requestUrl + customValue, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // 获取 iframe 元素
-                const iframe = document.getElementById('context-d');
-                // 获取 iframe 的文档对象
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                // 将 AJAX 请求返回的内容设置到 iframe 的文档中
-                iframeDoc.open();
-                iframeDoc.write(xhr.responseText);
-                iframeDoc.close();
-            }
-        };
-        // 发送请求
-        xhr.send();
+        if (customValue != null) {
+            // 创建 XMLHttpRequest 对象
+            const xhr = new XMLHttpRequest();
+            // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
+            xhr.open('GET', requestUrl + customValue, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 获取 iframe 元素
+                    const iframe = document.getElementById('context-d');
+                    // 获取 iframe 的文档对象
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    // 将 AJAX 请求返回的内容设置到 iframe 的文档中
+                    iframeDoc.open();
+                    iframeDoc.write(xhr.responseText);
+                    iframeDoc.close();
+                }
+            };
+            // 发送请求
+            xhr.send();
+        }
     })
 })
+const leftMenus = document.querySelectorAll('.Left_Menu');
+leftMenus.forEach(leftMenu => {
+    leftMenu.addEventListener('click', function (event) {
+        event.preventDefault();
+        const parentA = this.closest('a');
+        const currentDropdown = parentA.querySelector('.dropdown-content');
+        // 先隐藏所有的 dropdown-content
+        const allDropdowns = document.querySelectorAll('.dropdown-content');
+        allDropdowns.forEach(dropdown => {
+            if (dropdown!== currentDropdown) {
+                dropdown.style.display = 'none';
+            }
+        });
+        // 切换当前点击的 Left_Menu 对应的 dropdown-content 的显示状态
+        if (currentDropdown) {
+            if (currentDropdown.style.display === 'none' || currentDropdown.style.display === '') {
+                currentDropdown.style.display = 'block';
+            } else {
+                currentDropdown.style.display = 'none';
+            }
+        }
+    });
+});
+const listItems = document.querySelectorAll('.dropdown-content li');
+listItems.forEach(item => {
+    item.addEventListener('click', function () {
+        // 移除所有 li 的选中状态
+        const allListItems = document.querySelectorAll('.dropdown-content li');
+        allListItems.forEach(li => {
+            li.classList.remove('selected');
+        });
+        // 添加当前点击 li 的选中状态
+        this.classList.add('selected');
+    });
+});
 
 const menu_div = document.querySelectorAll('.Left_Menu');
-
+const downmenu_div = document.querySelectorAll('.dropdown-content');
 function removeBgColor() {
     menu_div.forEach(div => {
         div.style.backgroundColor = '';
     });
 }
-
 menu_div.forEach(div => {
     div.addEventListener('click', function () {
         removeBgColor();
