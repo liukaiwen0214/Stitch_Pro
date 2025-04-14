@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <html>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/star-home-style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
 
 <div id="Bast_1">
@@ -9,7 +10,7 @@
             <span> = Equal </span>
         </div>
         <%--主页--%>
-        <a class="menu-a" id="home-a" onclick="topUrl('/home_context')">
+        <a class="menu-a" id="home-a" data-custom="/home_context">
             <div class="Left_Menu" id="Left_Menu_1">
                 <svg x="1743490365292" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg" p-id="15573" width="25" height="25">
@@ -28,7 +29,7 @@
             </ul>
         </div>
         <%--式神录--%>
-        <a class="menu-a" id="information-a" onclick="topUrl('/other')">
+        <a class="menu-a" id="information-a" data-custom="/other">
             <div class="Left_Menu" id="Left_Menu_2">
                 <svg x="1743491731657" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg"
@@ -146,8 +147,7 @@
     </div>
 </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/overall-situation.js"></script>
-
+<script src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/overall-situation.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
 </html>

@@ -1,9 +1,3 @@
-// 获取当前页面的上下文路径
-const contextPath = window.location.pathname.split('/')[1];
-// 拼接完整的请求URL
-const requestUrl = '/' + contextPath;
-
-
 // 使用 fetch API 获取列表数据
 fetch(requestUrl + '/countCharactersByRarity')
     .then(response => response.json())

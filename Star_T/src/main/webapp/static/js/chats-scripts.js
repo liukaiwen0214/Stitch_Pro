@@ -1,19 +1,13 @@
-const chatContainer = document.querySelector('.chat-container');
-const messageInput = document.getElementById('messageInput');
-const sendButton = document.getElementById('sendButton');
-// 获取当前页面的上下文路径
-const contextPath_chats = window.location.pathname.split('/')[1];
-// 拼接完整的请求URL
-const requestUrl_chats = '/' + contextPath_chats;
-
-sendButton.addEventListener('click', () => {
+document.getElementById('sendButton').addEventListener('click', () => {
+    const chatContainer = document.querySelector('.chat-container');
+    const messageInput = document.getElementById('messageInput');
     const message = $('#messageInput').val();
     if (message.trim() !== '') {
         const data = {
             message: message
         };
         $.ajax({
-            url: requestUrl_chats + '/chat',
+            url: requestUrl + '/chat',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
