@@ -1,7 +1,9 @@
 package com.lucky.controller;
 
 
+import com.lucky.entity.GodEntity;
 import com.lucky.service.CharactersService;
+import com.lucky.service.GodService;
 import com.lucky.service.UserService;
 import com.lucky.util.AiChat;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +26,8 @@ public class Star_FirstController {
     private UserService userService;
     @Autowired
     private CharactersService charactersService;
+    @Autowired
+    private GodService godService;
 
     // 登录接口
     @PostMapping("/login")
@@ -106,5 +110,10 @@ public class Star_FirstController {
             response.put("reply", s);
         }
         return response;
+    }
+    @GetMapping("/getRandomGod")
+    @ResponseBody
+    public GodEntity getRandomGod(){
+        return godService.getRandomGod();
     }
 }
