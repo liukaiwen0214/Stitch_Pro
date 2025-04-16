@@ -5,18 +5,13 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.lucky.entity.GodEntity;
 import com.lucky.service.GodService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,6 +26,7 @@ public class GodServiceImpl implements GodService {
         Random random = new Random();
         int randomIndex = random.nextInt(getAllList().size());
         int id = getAllList().get(randomIndex);
+        getGodImage(getAllList());
         GodEntity top3 = getTop3(id);
         GodEntity bottom2 = getBottom2(id);
         godEntity.setId(top3.getId());
@@ -39,6 +35,24 @@ public class GodServiceImpl implements GodService {
         godEntity.setCv(bottom2.getCv());
         godEntity.setStory(bottom2.getStory());
         return godEntity;
+    }
+
+    @Override
+    public List<Map<String, Object>> getGodCount() {
+        // 使用 Stream API 将 Map<String, Integer> 转换为 Map<String, Object>
+        Map<String, Object> godList = getGodList().entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (String rarity : List.of("N", "R", "SR", "SSR", "SP")) {
+            Object count = godList.get(rarity);
+            if (count != null) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("count", count);
+                map.put("rarity", rarity);
+                result.add(map);
+            }
+        }
+        return result;
     }
 
     /**
@@ -157,5 +171,81 @@ public class GodServiceImpl implements GodService {
             // 可以考虑抛出更具体的异常或者记录日志
         }
         return godEntity;
+    }
+
+    /**
+     * 获取前三个参数值id，name，level
+     *
+     * @return 返回一个对象
+     */
+    public Map<String, Integer> getGodList() {
+        GodEntity godEntity = new GodEntity();
+        Map<String, Integer> map = new HashMap<>();
+        // 计数
+        map.put("N", 0);
+        map.put("R", 0);
+        map.put("SR", 0);
+        map.put("SSR", 0);
+        map.put("SP", 0);
+
+        try {
+            URL url = new URL(all_shishen);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+                JSONArray jsonArray = JSONArray.parseArray(response.toString());
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    String json_level = obj.getString("level");
+                    switch (json_level) {
+                        case "N" -> map.put("N", map.get("N") + 1);
+                        case "R" -> map.put("R", map.get("R") + 1);
+                        case "SR" -> map.put("SR", map.get("SR") + 1);
+                        case "SSR" -> map.put("SSR", map.get("SSR") + 1);
+                        case "SP" -> map.put("SP", map.get("SP") + 1);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return map;
+    }
+
+    public static void getGodImage(List<Integer> id) {
+        String imageUrl = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen/";
+        String savePath = "/Users/Stitch/Documents/刘凯文的MacBook Air/PersonalSpace/stitch_pro/Star_T/src/main/webapp/static/image/godAvatar/";
+        File directory = new File(savePath);
+        if (!directory.exists()) {
+            directory.mkdirs(); // 创建多级目录
+        }
+        for (int i = 0; i < id.size(); i++) {
+            String fileName = id.get(i) + ".png";
+            File file = new File(savePath + fileName);
+            if (file.exists()) {
+//                System.out.println("图片 " + fileName + " 已存在，跳过下载。");
+                continue;
+            }
+            try (InputStream inputStream = new URL(imageUrl + fileName).openStream();
+                 FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, bytesRead);
+                }
+                System.out.println("图片下载成功！保存路径：" + file.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("图片 " + fileName + " 下载失败：" + e.getMessage());
+            }
+        }
     }
 }

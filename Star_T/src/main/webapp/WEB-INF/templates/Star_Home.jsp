@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <html>
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/star-home-style.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
 
 <div id="Bast_1">
@@ -10,8 +9,8 @@
             <span> = Equal </span>
         </div>
         <%--主页--%>
-        <a class="menu-a" id="home-a" data-custom="/home_context">
-            <div class="Left_Menu" id="Left_Menu_1">
+        <a class="menu-a">
+            <div class="Left_Menu" id="zhuye">
                 <svg x="1743490365292" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg" p-id="15573" width="25" height="25">
                     <path d="M738.8672 928.3072H286.4128c-106.4448 0-193.024-86.5792-193.024-193.024V285.1328c0-106.4448 86.5792-193.024 193.024-193.024h452.4544c106.4448 0 193.024 86.5792 193.024 193.024v450.0992c0 106.496-86.5792 193.0752-193.024 193.0752zM286.4128 163.7888c-66.9184 0-121.344 54.4256-121.344 121.344v450.0992c0 66.9184 54.4256 121.344 121.344 121.344h452.4544c66.9184 0 121.344-54.4256 121.344-121.344V285.1328c0-66.9184-54.4256-121.344-121.344-121.344H286.4128z"
@@ -23,7 +22,7 @@
             </div>
         </a>
         <%--式神录--%>
-        <a class="menu-a" id="information-a">
+        <a class="menu-a">
             <div class="Left_Menu" id="Left_Menu_2">
                 <svg x="1743491731657" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +45,7 @@
         </a>
 
         <%--御魂--%>
-        <a class="menu-a" id="equipment-a">
+        <a class="menu-a">
             <div class="Left_Menu" id="Left_Menu_3">
                 <svg x="1743492200494" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg" p-id="15946" width="25" height="25">
@@ -65,7 +64,7 @@
             </div>
         </a>
         <%--副本--%>
-        <a class="menu-a" id="level-a">
+        <a class="menu-a">
             <div class="Left_Menu" id="Left_Menu_4">
                 <svg x="1743492236102" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg" p-id="16107" width="25" height="25">
@@ -89,7 +88,7 @@
         </a>
 
         <%--故事线--%>
-        <a class="menu-a" id="story-a">
+        <a class="menu-a">
             <div class="Left_Menu" id="Left_Menu_5">
                 <svg x="1743492264537" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg" p-id="16370" width="25" height="25">
@@ -102,7 +101,7 @@
             </div>
         </a>
         <%--待定--%>
-        <a class="menu-a" id="other-a">
+        <a class="menu-a">
             <div class="Left_Menu" id="Left_Menu_6">
                 <svg x="1743492294257" class="icon" viewBox="0 0 1024 1024"
                      xmlns="http://www.w3.org/2000/svg" p-id="16631" width="25" height="25">
@@ -152,7 +151,7 @@
             </svg>
         </div>
         <div class="error__title" id="welcome"></div>
-        <div class="error__close"  onclick="welcome_close()">
+        <div class="error__close">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20">
                 <path fill="#393a37"
                       d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path>
@@ -161,7 +160,10 @@
     </div>
 </div>
 </body>
-<script src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/overall-situation.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/overall-situation.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/star-context.js"></script>
+<script src="${pageContext.request.contextPath}/static/utils/echarts.min.js"></script>
 </html>

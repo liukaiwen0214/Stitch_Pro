@@ -84,7 +84,7 @@ svg {
     position: fixed;
     border-bottom: 1px solid #F4F4F4;
     width: 100%;
-    height: 6%;
+    height: 50px;
 }
 
 .notifications-container {

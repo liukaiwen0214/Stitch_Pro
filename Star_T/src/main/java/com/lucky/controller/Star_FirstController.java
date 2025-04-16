@@ -2,7 +2,6 @@ package com.lucky.controller;
 
 
 import com.lucky.entity.GodEntity;
-import com.lucky.service.CharactersService;
 import com.lucky.service.GodService;
 import com.lucky.service.UserService;
 import com.lucky.util.AiChat;
@@ -24,8 +23,7 @@ import java.util.Map;
 public class Star_FirstController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private CharactersService charactersService;
+
     @Autowired
     private GodService godService;
 
@@ -91,12 +89,11 @@ public class Star_FirstController {
         return "/other";
     }
 
-    @GetMapping("/countCharactersByRarity")
-    @ResponseBody
-    public List<Map<String, Object>> countCharactersByRarity(Model model) {
-        List<Map<String, Object>> charactersByRarity = charactersService.countCharactersByRarity();
+    @RequestMapping("/getGodCount")
+    public String countCharactersByRarity(Model model) {
+        List<Map<String, Object>> charactersByRarity = godService.getGodCount();
         model.addAttribute("charactersByRarity", charactersByRarity);
-        return charactersByRarity;
+        return "/Star_Context";
     }
 
     @PostMapping("/chat")

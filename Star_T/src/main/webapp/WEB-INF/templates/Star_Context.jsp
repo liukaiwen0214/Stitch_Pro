@@ -11,23 +11,21 @@
 <body>
 <div id="container"></div>
 <%--存放随机式神--%>
-<a id="person_context">
-    <div class="random_person" id="random_person">
-        <%--通过接口获取随机的头像--%>
-        <div id="personImg">
-            <img src="" alt="">
-        </div>
-        <%--通过接口获取随机名字--%>
-        <div id="personName">
-            <span>
-
-            </span>
-        </div>
-        <div id="personStory">
-
-        </div>
+<div class="random_person" id="random_person">
+    <%--通过接口获取随机的头像--%>
+    <div id="personImg_div">
+        <img id="personImg_img" alt="加载失败" src="" crossorigin="anonymous">
     </div>
-</a>
+    <%--通过接口获取随机名字--%>
+    <div id="personName">
+        <span>
+
+        </span>
+    </div>
+    <div id="personStory">
+
+    </div>
+</div>
 <div class="chat-container-wrapper">
     <div class="chat-container">
         <!-- 后台消息 -->
@@ -47,8 +45,8 @@
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/star-context.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/chats-scripts.js"></script>
 <script src="${pageContext.request.contextPath}/static/utils/echarts.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/star-context.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/chats-scripts.js"></script>
 </html>

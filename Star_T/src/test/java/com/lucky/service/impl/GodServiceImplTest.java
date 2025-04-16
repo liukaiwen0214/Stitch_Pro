@@ -21,4 +21,9 @@ class GodServiceImplTest {
     void getRandomGod() {
         System.out.println(godService.getRandomGod().getStory().get(1));;
     }
+
+    @Test
+    void getGodCount() {
+        System.out.printf(godService.getGodCount().toString());
+    }
 }

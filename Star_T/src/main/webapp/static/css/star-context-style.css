@@ -11,7 +11,7 @@ body {
 }
 #container{
     position: absolute;
-    top:1rem;
+    top:15px;
     left:1rem;
     width: 25rem;
     height: 25rem;
@@ -21,7 +21,7 @@ body {
 .chat-container-wrapper {
     position:absolute;
     left:63%;
-    top:1rem;
+    top:15px;
     width: 30%;
     height:95%;
     max-width: 48rem;
@@ -90,5 +90,23 @@ body {
 
 .input-container button:hover {
     background-color: #2563eb;
+}
+#random_person{
+    position:fixed;
+    border:1px solid red;
+    height:400px;
+    width:522px;
+    top:15px;
+    left:28%;
+    /* 添加鼠标悬浮样式 */
+    cursor: pointer;
+    /* 添加过渡动画 */
+    transition: transform 0.3s ease;
+    /* 设置变换的中心点 */
+    transform-origin: center;
+}
+#random_person:hover{
+    /* 悬浮时放大 1.1 倍 */
+    transform: scale(1.01);
 }
 
