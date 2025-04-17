@@ -1,13 +1,7 @@
-// 获取当前页面的上下文路径
-import {getGodcount} from "./star-context.js";
-
 const contextPath = window.location.pathname.split('/')[1];
 // 拼接完整的请求URL
 const requestUrl = '/' + contextPath;
-/**
- * 获取按钮ID
- * @type {HTMLElement}
- */
+
 //Star_Home.jsp中左边菜单栏的“主页”按钮-a
 const zhuye = document.getElementById('zhuye');
 //Star_Home.jsp中左边菜单栏的“退出”按钮
@@ -17,23 +11,25 @@ const leftMenus = document.querySelectorAll('.Left_Menu');
 //Star_Home.jsp中dropdown-content的li标签
 const listItems = document.querySelectorAll('.dropdown-content li');
 //Star_Home.jsp中右上角欢迎标签的关闭按钮
-const error__close = document.querySelector(".error__close")
+const error__close = document.querySelector(".error__close");
 //Star_Home.jsp中右上角欢迎标签
 const closeLogin = document.getElementById('closeLogin');
-
-
 //定义canvas颜色
 const rarityColors = {
     "N": "#bbe0ec", "R": "#76c33a", "SR": "#7900da", "SSR": "#fabe41", "SP": "#bd0000"
 };
 
+// 标志位，用于避免DOMContentLoaded事件中重复触发
+let isZhuyeClickedOnLoad = false;
+
 /**
  * 页面加载好dom后立马执行
  */
 document.addEventListener('DOMContentLoaded', function () {
-    if (zhuye) {
-        // zhuye.click();
-        zhuye.style.backgroundColor = "#F5F5F5"
+    if (zhuye && !isZhuyeClickedOnLoad) {
+        zhuye.click();
+        zhuye.style.backgroundColor = "#F5F5F5";
+        isZhuyeClickedOnLoad = true;
     }
 });
 
@@ -46,6 +42,7 @@ function logout() {
     fetch(requestUrl + '/logout', {method: 'POST'})
         .then(() => window.location.href = requestUrl + '/Star_Home');
 }
+
 //监控按钮是否被点击
 if (logoutButton) {
     logoutButton.addEventListener('click', function () {
@@ -53,33 +50,87 @@ if (logoutButton) {
         logout();
     });
 }
-/**
- *监控主页是否被点击，以及点击后的事件
- */
-if (zhuye) {
-    zhuye.addEventListener("click", function () {
-        // 创建 XMLHttpRequest 对象
-        const xhr = new XMLHttpRequest();
-        // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
-        xhr.open('GET', requestUrl + "/home_context", true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // 获取 iframe 元素
-                const iframe = document.getElementById('context-d');
-                // 获取 iframe 的文档对象
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                // 将 AJAX 请求返回的内容设置到 iframe 的文档中
-                iframeDoc.open();
-                iframeDoc.write(xhr.responseText);
-                iframeDoc.close();
-                getGodcount();
-            }
-        };
-        // 发送请求
-        xhr.send();
-    })
 
+/**
+ * 监控主页是否被点击，以及点击后的事件
+ */
+function handleZhuyeClick() {
+    // console.info("zhuye click")
+    // 创建 XMLHttpRequest 对象
+    const xhr = new XMLHttpRequest();
+    // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
+    xhr.open('GET', requestUrl + "/home_context", true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // 获取 iframe 元素
+            const iframe = document.getElementById('context-d');
+
+            // 定义 iframe 加载事件处理函数
+            const iframeLoadHandler = function () {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                // 增加延迟以确保 iframe 内部的 DOM 已经加载完成
+                setTimeout(() => {
+                    const container = iframeDoc.getElementById('container');
+                    const personImg = iframeDoc.getElementById('personImg_img');
+                    const personName = iframeDoc.getElementById('personName');
+                    const personDiv = iframeDoc.getElementById('personImg_div');
+                    if (container) {
+                        // console.log('成功获取到 container 元素:', container);
+                        getcanvas(rarityColors, requestUrl, container);
+                    } else {
+                        console.log('未找到 container 元素');
+                    }
+                    if (personImg) {
+                        // console.log('成功获取到 personImg_img 元素:', personImg);
+                        fetchRandomGod(requestUrl,personDiv, personImg, personName);
+                        // 在这里可以对 personImg_img 元素进行操作
+                    } else {
+                        console.log('未找到 personImg_img 元素，尝试使用 MutationObserver 监听');
+                        const observer = new MutationObserver((mutationsList) => {
+                            for (const mutation of mutationsList) {
+                                if (mutation.type === 'childList') {
+                                    const newPersonImg = iframeDoc.getElementById('personImg_img');
+                                    const personName = iframeDoc.getElementById('personName');
+                                    if (newPersonImg) {
+                                        console.log('通过 MutationObserver 成功获取到 personImg_img 元素:', newPersonImg);
+                                        // 不再需要监听，断开连接
+                                        observer.disconnect();
+                                        // 在这里可以对 newPersonImg 元素进行操作
+                                        fetchRandomGod(requestUrl, newPersonImg,personName);
+                                    }
+                                }
+                            }
+                        });
+                        observer.observe(iframeDoc.body, {childList: true, subtree: true});
+                    }
+                }, 10); // 延迟 1000 毫秒，可根据实际情况调整
+
+                // 移除 iframe 加载事件监听器，防止重复触发
+                iframe.removeEventListener('load', iframeLoadHandler);
+            };
+
+            // 监听 iframe 的 load 事件，当 iframe 内页面加载完成时触发
+            iframe.addEventListener('load', iframeLoadHandler);
+
+            // 获取 iframe 的文档对象
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            // 将 AJAX 请求返回的内容设置到 iframe 的文档中
+            iframeDoc.open();
+            iframeDoc.write(xhr.responseText);
+            iframeDoc.close();
+        }
+    };
+    // 发送请求
+    xhr.send();
+    // console.info("zhuye send")
 }
+
+if (zhuye) {
+    // 先移除可能存在的事件监听器
+    zhuye.removeEventListener('click', handleZhuyeClick);
+    zhuye.addEventListener("click", handleZhuyeClick);
+}
+
 /**
  * 当页面加载时判断登陆状态
  */
@@ -89,7 +140,7 @@ fetch(requestUrl + '/currentUser').then(response => response.json()).then(data =
             document.getElementById('welcome').innerText = `登陆成功 ${data.data}`;
         }
     } else {
-        history.pushState({}, 'Home', requestUrl + '/')
+        history.pushState({}, 'Home', requestUrl + '/');
         window.location.href = requestUrl + '/';
     }
 });
@@ -100,24 +151,38 @@ fetch(requestUrl + '/currentUser').then(response => response.json()).then(data =
 if (error__close) {
     error__close.addEventListener("click", function () {
         closeLogin.style.display = 'none';
-    })
+    });
 }
 
 /**
  * 定义查询式神方法
- * @returns {Promise<any|null>} 返回一个式神
  */
-export async function fetchRandomGod() {
-    try {
-        const response = await fetch(requestUrl + '/getRandomGod', {method: 'GET'});
-        if (!response.ok) {
-            console.log("获取错误！状态码:" + response.status);
+function fetchRandomGod(requestUrl, personDiv, personImg, personName) {
+    fetch(requestUrl + '/getRandomGod', {method: 'GET'}).then(response => response.json()).then(data => {
+        console.info(data);
+        personImg.src = requestUrl + '/static/image/godAvatar/' + data.id + '.png';
+        switch (data.level) {
+            case "N":
+                personDiv.style.backgroundColor = "#bbe0ec";
+                break;
+            case "R":
+                personDiv.style.backgroundColor = "#76c33a";
+                break;
+            case "SR":
+                personDiv.style.backgroundColor = "#7900da";
+                break;
+            case "SSR":
+                personDiv.style.backgroundColor = "#fabe41";
+                break;
+            case "SP":
+                personDiv.style.backgroundColor = "#bd0000";
+                break;
+            default :
+                personDiv.style.backgroundColor = "#ffffff";
         }
-        return await response.json();
-    } catch (error) {
-        console.error('请求出错:', error);
-        return null;
-    }
+        personImg.title = data.name;
+        personName.querySelector("span").textContent = data.name;
+    });
 }
 
 /**
@@ -160,7 +225,8 @@ leftMenus.forEach(div => {
         removeBgColor();
         this.style.backgroundColor = '#F5F5F5';
     });
-})
+});
+
 /**
  * 遍历所有的li标签，增加点击时的样式
  */
@@ -176,16 +242,55 @@ listItems.forEach(item => {
     });
 });
 
-/**
- * 创建canvas方法
- */
-fetchRandomGod().then(respone => {
-    const img_url = document.getElementById("personImg_img");
-    if (img_url) {
-        img_url.src = requestUrl + '/static/image/godAvatar/' + respone.id + '.png'
-    }
-})
-
-
-
-
+function getcanvas(rarityColors, requestUrl, container) {
+    fetch(requestUrl + '/getGodCount').then(response => response.json()).then(data => {
+        const echartsData = data.map(item => ({
+            value: item.count, name: item.rarity, itemStyle: {
+                color: rarityColors[item.rarity]
+            }
+        }));
+        if (container) {
+            const myChart = echarts.init(container, null, {
+                renderer: 'canvas', useDirtyRect: false
+            });
+            const app = {};
+            let option;
+            option = {
+                title: {
+                    text: '式神数量统计', left: 'center'
+                }, tooltip: {
+                    trigger: 'item'
+                }, legend: {
+                    top: '5%', left: 'center'
+                }, series: [{
+                    name: '式神统计', type: 'pie', radius: ['40%', '70%'], avoidLabelOverlap: false, itemStyle: {
+                        borderRadius: 10, borderColor: '#fff', borderWidth: 2
+                    }, label: {
+                        show: false, position: 'center'
+                    }, emphasis: {
+                        label: {
+                            show: true, fontSize: 40, fontWeight: 'bold'
+                        }
+                    }, labelLine: {
+                        show: false
+                    }, data: echartsData
+                }]
+            };
+            if (option && typeof option === 'object') {
+                myChart.setOption(option);
+            }
+            // 添加点击事件
+            myChart.on('click', function (params) {
+                // params 包含了点击的数据项的相关信息
+                const name = params.name;
+                const value = params.value;
+                console.log(`你点击了 ${name}，数量为 ${value}`);
+                // 你可以在这里添加更复杂的逻辑，比如跳转到详情页等
+                // 例如：window.location.href = `detail.html?name=${name}`;
+            });
+            window.addEventListener('resize', myChart.resize);
+        } else {
+            console.error("dom空")
+        }
+    })
+}

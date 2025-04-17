@@ -81,7 +81,7 @@ public class Star_FirstController {
     }
 
     @RequestMapping("/home_context")
-    public String showHome_context(Model model) {
+    public String showHome_context() {
         return "/Star_Context";
     }
     @RequestMapping("/other")
@@ -89,12 +89,12 @@ public class Star_FirstController {
         return "/other";
     }
 
-    @RequestMapping("/getGodCount")
-    public String countCharactersByRarity(Model model) {
-        List<Map<String, Object>> charactersByRarity = godService.getGodCount();
-        model.addAttribute("charactersByRarity", charactersByRarity);
-        return "/Star_Context";
+    @GetMapping("/getGodCount")
+    @ResponseBody
+    public List<Map<String, Object>> countCharactersByRarity() {
+        return godService.getGodCount();
     }
+
 
     @PostMapping("/chat")
     @ResponseBody

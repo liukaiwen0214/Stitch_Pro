@@ -94,6 +94,9 @@ body {
 #random_person{
     position:fixed;
     border:1px solid red;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
     height:400px;
     width:522px;
     top:15px;
@@ -108,5 +111,15 @@ body {
 #random_person:hover{
     /* 悬浮时放大 1.1 倍 */
     transform: scale(1.01);
+}
+#personImg_div{
+    position:fixed;
+    border-radius:60px;
+}
+#personName{
+    position:absolute;
+    font-size:23px;
+    top:130px;
+    border:1px solid red;
 }
 

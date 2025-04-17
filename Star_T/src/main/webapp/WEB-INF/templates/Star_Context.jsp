@@ -45,8 +45,8 @@
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/star-context.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/chats-scripts.js"></script>
 <script src="${pageContext.request.contextPath}/static/utils/echarts.min.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/chats-scripts.js"></script>
 </html>
