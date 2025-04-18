@@ -14,6 +14,8 @@ const listItems = document.querySelectorAll('.dropdown-content li');
 const error__close = document.querySelector(".error__close");
 //Star_Home.jsp中右上角欢迎标签
 const closeLogin = document.getElementById('closeLogin');
+//获取子标签点击事件
+const childskid = document.querySelectorAll('.childs-kid');
 //定义canvas颜色
 const rarityColors = {
     "N": "#bbe0ec", "R": "#76c33a", "SR": "#7900da", "SSR": "#fabe41", "SP": "#bd0000"
@@ -74,6 +76,7 @@ function handleZhuyeClick() {
                     const personImg = iframeDoc.getElementById('personImg_img');
                     const personName = iframeDoc.getElementById('personName');
                     const personDiv = iframeDoc.getElementById('personImg_div');
+                    const personStory = iframeDoc.getElementById('personStory');
                     if (container) {
                         // console.log('成功获取到 container 元素:', container);
                         getcanvas(rarityColors, requestUrl, container);
@@ -82,7 +85,7 @@ function handleZhuyeClick() {
                     }
                     if (personImg) {
                         // console.log('成功获取到 personImg_img 元素:', personImg);
-                        fetchRandomGod(requestUrl,personDiv, personImg, personName);
+                        fetchRandomGod(requestUrl, personDiv, personImg, personName, personStory);
                         // 在这里可以对 personImg_img 元素进行操作
                     } else {
                         console.log('未找到 personImg_img 元素，尝试使用 MutationObserver 监听');
@@ -91,12 +94,14 @@ function handleZhuyeClick() {
                                 if (mutation.type === 'childList') {
                                     const newPersonImg = iframeDoc.getElementById('personImg_img');
                                     const personName = iframeDoc.getElementById('personName');
+                                    const personDiv = iframeDoc.getElementById('personImg_div');
+                                    const personStory = iframeDoc.getElementById('personStory');
                                     if (newPersonImg) {
                                         console.log('通过 MutationObserver 成功获取到 personImg_img 元素:', newPersonImg);
                                         // 不再需要监听，断开连接
                                         observer.disconnect();
                                         // 在这里可以对 newPersonImg 元素进行操作
-                                        fetchRandomGod(requestUrl, newPersonImg,personName);
+                                        fetchRandomGod(requestUrl, personDiv, newPersonImg, personName, personStory);
                                     }
                                 }
                             }
@@ -157,7 +162,7 @@ if (error__close) {
 /**
  * 定义查询式神方法
  */
-function fetchRandomGod(requestUrl, personDiv, personImg, personName) {
+function fetchRandomGod(requestUrl, personDiv, personImg, personName, personStory) {
     fetch(requestUrl + '/getRandomGod', {method: 'GET'}).then(response => response.json()).then(data => {
         console.info(data);
         personImg.src = requestUrl + '/static/image/godAvatar/' + data.id + '.png';
@@ -182,6 +187,13 @@ function fetchRandomGod(requestUrl, personDiv, personImg, personName) {
         }
         personImg.title = data.name;
         personName.querySelector("span").textContent = data.name;
+        //将传记添加到span中
+        // const storylist = data.story;
+        // storylist.forEach(item => {
+        //     const storyspan = document.createElement("span")
+        //     storyspan.textContent = item;
+        //     personStory.appendChild(storyspan);
+        // })
     });
 }
 
@@ -294,3 +306,28 @@ function getcanvas(rarityColors, requestUrl, container) {
         }
     })
 }
+
+childskid.forEach(childonclick => {
+    childonclick.addEventListener('click', function (event) {
+        const url = childonclick.getAttribute("data-menu");
+        // console.info("zhuye click")
+        // 创建 XMLHttpRequest 对象
+        const xhr = new XMLHttpRequest();
+        // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
+        xhr.open('GET', requestUrl + "/" + url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // 获取 iframe 元素
+                const iframe = document.getElementById('context-d');
+                // 获取 iframe 的文档对象
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                // 将 AJAX 请求返回的内容设置到 iframe 的文档中
+                iframeDoc.open();
+                iframeDoc.write(xhr.responseText);
+                iframeDoc.close();
+            }
+        };
+        // 发送请求
+        xhr.send();
+    })
+})

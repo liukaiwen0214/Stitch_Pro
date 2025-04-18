@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="TiDB" uuid="98329f1c-9d87-4f96-9b4f-a766db16e315">
-      <driver-ref>tidb</driver-ref>
+    <data-source source="LOCAL" name="aliyun" uuid="46d55892-30f7-47eb-83a2-0e3ef67a6843">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://2Kecynfw1HPhqCV.root:9q4rtr4gH4FHvH25@gateway01.eu-central-1.prod.aws.tidbcloud.com:4000/Master?sslMode=VERIFY_IDENTITY</jdbc-url>
+      <jdbc-url>jdbc:mysql://rm-bp161s1z7rbbuzm0xgo.mysql.rds.aliyuncs.com:3306/themstar</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+        <property name="com.intellij.clouds.kubernetes.db.resource.type" value="Deployment" />
         <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
