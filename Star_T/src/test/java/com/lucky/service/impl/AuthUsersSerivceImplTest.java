@@ -18,12 +18,19 @@ class AuthUsersSerivceImplTest {
 
     @Test
     void authenticateUser() {
-//        authUsersSerivce.authenticateUser();
+        AuthUsersEntity users = new AuthUsersEntity();
+        users.setUser_name("admin");
+        users.setUser_password("admin");
+        if (authUsersSerivce.authenticateUser(users)) {
+            System.out.println("登录成功");
+        }else {
+            System.out.println("登录失败，账号密码错误");
+        }
     }
 
     @Test
     void registerUser() {
-        AuthUsersEntity users = new AuthUsersEntity("liukaiwen","lkwyouxiang@126.com","My148632.","18501973429","");
+        AuthUsersEntity users = new AuthUsersEntity("admin","admin@126.com","admin","17515053429","");
         if(authUsersSerivce.registerUser(users)){
             System.out.println("添加用户成功");
         }

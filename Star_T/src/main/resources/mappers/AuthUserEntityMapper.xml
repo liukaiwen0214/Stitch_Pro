@@ -19,9 +19,9 @@
     <select id="authenticateUser" resultType="java.lang.Integer">
         select count(*)
         from auth_users
-        where (auth_users.user_name = #{username} and auth_users.user_password = #{password})
-           or (auth_users.user_email = #{email} and auth_users.user_password = #{password})
-           or (auth_users.user_iphone = #{phone} and auth_users.user_password = #{password})
+        where (auth_users.user_name = #{user_name} and auth_users.user_password = #{user_password})
+           or (auth_users.user_email = #{user_email} and auth_users.user_password = #{user_password})
+           or (auth_users.user_iphone = #{user_iphone} and auth_users.user_password = #{user_password})
     </select>
     <select id="consultUser" resultType="java.lang.Integer">
         select count(*)

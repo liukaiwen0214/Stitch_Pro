@@ -14,6 +14,10 @@ public class AuthUsersEntity {
     public AuthUsersEntity() {
     }
 
+    public AuthUsersEntity(String user_name, String user_password) {
+        this.user_name = user_name;
+        this.user_password = user_password;
+    }
 
     public AuthUsersEntity(String user_name, String user_email, String user_password, String user_iphone, String user_descriptive) {
         this.user_name = user_name;

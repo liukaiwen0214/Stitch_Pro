@@ -14,15 +14,12 @@ public class AuthUsersSerivceImpl implements AuthUsersSerivce {
     /**
      * 登陆方法
      *
-     * @param username 用户名
-     * @param password 用户密码
-     * @param email    用户邮箱
-     * @param phone    用户手机
+     * @param authUsersEntity 用户
      * @return 是否成功
      */
     @Override
-    public boolean authenticateUser(String username, String password, String email, String phone) {
-        return authUserEntityMapper.authenticateUser(username, password, email, phone) > 0;
+    public boolean authenticateUser(AuthUsersEntity authUsersEntity) {
+        return authUserEntityMapper.authenticateUser(authUsersEntity) > 0;
     }
 
     /**
@@ -37,16 +34,16 @@ public class AuthUsersSerivceImpl implements AuthUsersSerivce {
     public boolean registerUser(AuthUsersEntity authUsersEntity) {
         if (authUserEntityMapper.consultUser(authUsersEntity) <= 0) {
             System.out.println("1");
-            if (authUserEntityMapper.consultUser_id() == null){
+            if (authUserEntityMapper.consultUser_id() == null) {
                 authUsersEntity.setUser_id(1);
                 System.out.println("要添加的用户是2：" + authUsersEntity.toString());
                 return authUserEntityMapper.increaseUser(authUsersEntity) > 0;
             }
-            authUsersEntity.setUser_id(authUserEntityMapper.consultUser_id()+1);
+            authUsersEntity.setUser_id(authUserEntityMapper.consultUser_id() + 1);
             System.out.println("要添加的用户是3：" + authUsersEntity.toString());
             return authUserEntityMapper.increaseUser(authUsersEntity) > 0;
         }
-        System.out.println(authUsersEntity.getUser_name()+"用户存在于数据库中");
+        System.out.println(authUsersEntity.getUser_name() + "用户存在于数据库中");
         return false;
     }
 }
