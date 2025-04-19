@@ -1,18 +1,16 @@
 package com.lucky.controller;
 
 
+import com.lucky.entity.AuthUsersEntity;
 import com.lucky.entity.GodEntity;
+import com.lucky.service.AuthUsersSerivce;
 import com.lucky.service.GodService;
-import com.lucky.service.UserService;
 import com.lucky.util.AiChat;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,7 +20,7 @@ import java.util.Map;
 @Controller
 public class Star_FirstController {
     @Autowired
-    private UserService userService;
+    private AuthUsersSerivce authUsersSerivce;
 
     @Autowired
     private GodService godService;
@@ -30,13 +28,12 @@ public class Star_FirstController {
     // 登录接口
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> login(@RequestParam("email") String email,
-                                     @RequestParam("password") String password,
+    public Map<String, Object> login(@RequestParam("user") AuthUsersEntity authUsers,
                                      HttpSession session) {
         Map<String, Object> result = new HashMap<>();
 
-        if (userService.loginValidate(email, password)) {
-            session.setAttribute("user", email);
+        if (authUsersSerivce.authenticateUser(authUsers)) {
+            session.setAttribute("user", authUsers);
             result.put("code", 200);
             result.put("message", "登录成功");
             result.put("redirectUrl", "/Star_Home");
@@ -84,6 +81,7 @@ public class Star_FirstController {
     public String showHome_context() {
         return "/Star_Context";
     }
+
     @RequestMapping("/other")
     public String other() {
         return "/other";
@@ -108,9 +106,10 @@ public class Star_FirstController {
         }
         return response;
     }
+
     @GetMapping("/getRandomGod")
     @ResponseBody
-    public GodEntity getRandomGod(){
+    public GodEntity getRandomGod() {
         return godService.getRandomGod();
     }
 }
