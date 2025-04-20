@@ -26,12 +26,12 @@ public class GodServiceImpl implements GodService {
         Random random = new Random();
         int randomIndex = random.nextInt(getAllList().size());
         int id = getAllList().get(randomIndex);
-//        getGodImage(getAllList());
-//        GodEntity top3 = getTop3(id);
+        getGodImage(getAllList());
+        GodEntity top3 = getTop3(id);
         GodEntity bottom2 = getBottom2(id);
-//        godEntity.setId(top3.getId());
-//        godEntity.setName(top3.getName());
-//        godEntity.setLevel(top3.getLevel());
+        godEntity.setId(top3.getId());
+        godEntity.setName(top3.getName());
+        godEntity.setLevel(top3.getLevel());
         godEntity.setCv(bottom2.getCv());
         godEntity.setStory(bottom2.getStory());
         return godEntity;

@@ -25,7 +25,7 @@
     <form id="loginForm">
         <div class="form-group">
             <label for="email"></label>
-            <input type="email" id="email" name="email" placeholder="请输入账户" required>
+            <input type="text" id="email" name="email" placeholder="请输入账户/用户名/手机号" required>
         </div>
 
         <div class="form-group">

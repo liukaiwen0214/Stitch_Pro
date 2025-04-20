@@ -140,24 +140,11 @@ if (zhuye) {
  * 当页面加载时判断登陆状态
  */
 fetch(requestUrl + '/currentUser').then(response => response.json()).then(data => {
-    if (data.code === 200) {
-        if (document.getElementById('welcome')) {
-            document.getElementById('welcome').innerText = `登陆成功 ${data.data}`;
-        }
-    } else {
+    if (data.code !== 200) {
         history.pushState({}, 'Home', requestUrl + '/');
         window.location.href = requestUrl + '/';
     }
 });
-
-/**
- * 右上角欢迎菜单的隐藏方法
- */
-if (error__close) {
-    error__close.addEventListener("click", function () {
-        closeLogin.style.display = 'none';
-    });
-}
 
 /**
  * 定义查询式神方法

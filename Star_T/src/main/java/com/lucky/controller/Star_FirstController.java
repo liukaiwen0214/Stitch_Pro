@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 @Controller
 public class Star_FirstController {
@@ -25,15 +27,30 @@ public class Star_FirstController {
     @Autowired
     private GodService godService;
 
+    private Logger logger = Logger.getLogger(Star_FirstController.class.getName());
+
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    private static final String PHONE_REGEX = "^1[3-9]\\d{9}$";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+    private static final Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX);
+
     // 登录接口
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> login(@RequestParam("user") AuthUsersEntity authUsers,
-                                     HttpSession session) {
+    public Map<String, Object> login(@RequestParam("email") String auth_User,@RequestParam("password") String password, HttpSession session) {
         Map<String, Object> result = new HashMap<>();
+        AuthUsersEntity authUsers = new AuthUsersEntity();
 
+        if (EMAIL_PATTERN.matcher(auth_User).matches()) {
+            authUsers.setUser_email(auth_User);
+        } else if (PHONE_PATTERN.matcher(auth_User).matches()) {
+            authUsers.setUser_iphone(auth_User);
+        } else {
+            authUsers.setUser_name(auth_User);
+        }
+        authUsers.setUser_password(password);
         if (authUsersSerivce.authenticateUser(authUsers)) {
-            session.setAttribute("user", authUsers);
+            session.setAttribute("User_name", authUsers.getUser_name());
             result.put("code", 200);
             result.put("message", "登录成功");
             result.put("redirectUrl", "/Star_Home");
@@ -49,7 +66,7 @@ public class Star_FirstController {
     @ResponseBody
     public Map<String, Object> getCurrentUser(HttpSession session) {
         Map<String, Object> result = new HashMap<>();
-        Object user = session.getAttribute("user");
+        Object user = session.getAttribute("User_name");
         if (user != null) {
             result.put("code", 200);
             result.put("data", user);
@@ -70,10 +87,9 @@ public class Star_FirstController {
 
     @RequestMapping("/Star_Home")
     public String showHomePage(HttpSession session, Model model) {
-        Object user = session.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("user", user);
-        }
+        Object User_name = session.getAttribute("User_name");
+        System.out.println(User_name);
+        model.addAttribute("User_name", User_name);
         return "/Star_Home"; // 对应视图解析器配置的 JSP 文件名
     }
 
