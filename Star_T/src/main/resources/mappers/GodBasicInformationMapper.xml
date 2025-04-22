@@ -12,4 +12,7 @@
     <select id="consultGod" resultType="int">
         select count(*) from god_basic_information where god_id = #{god_id};
     </select>
+    <select id="allGodId" resultType="java.lang.Integer">
+        select god_id from god_basic_information;
+    </select>
 </mapper>

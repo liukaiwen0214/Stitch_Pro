@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lucky.mapper.GodSkillBasicBeforeAwakeningMapper">
+    <insert id="addSkillBasicBeforeAwakening">
+        insert into god_skill_basic_before_awakening(god_id, skill_id, skill_name, skill_detail, skill_icon)
+        values (#{god_id}, #{skill_id}, #{skill_name}, #{skill_detail}, #{skill_icon});
+    </insert>
+
+    <select id="consultSkillId" resultType="java.lang.Integer">
+        select count(*)
+        from god_skill_basic_before_awakening
+        where skill_id = #{skill_id};
+    </select>
+</mapper>
