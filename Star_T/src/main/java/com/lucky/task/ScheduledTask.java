@@ -6,7 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.lucky.entity.*;
 import com.lucky.mapper.*;
 import com.lucky.util.AliyunOSSUtil;
-import com.lucky.util.CheckUrlExists;
+import com.lucky.util.HttpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -37,9 +37,9 @@ public class ScheduledTask {
     @Autowired
     private GodSkillDetailAfterAwakeningMapper gsdaam;
 
-    private final Logger logger = Logger.getLogger(ScheduledTask.class.getName());
+    private final HttpUtils httpUtils = new HttpUtils();
 
-    private final CheckUrlExists checkUrlExists = new CheckUrlExists();
+    private final Logger logger = Logger.getLogger(ScheduledTask.class.getName());
 
 
     // 每天凌晨 2 点执行
@@ -289,7 +289,7 @@ public class ScheduledTask {
     }
 
     /**
-     * 后去式神头像上传到阿里云oss
+     * 获取式神头像上传到阿里云oss
      */
     public void acquisditon_godimages() {
         String bucketName = "stitch-star";
@@ -301,6 +301,9 @@ public class ScheduledTask {
         }
     }
 
+    /**
+     * 获取式神技能图标上传阿里云oss
+     */
     public void acquisditon_godskillimages() {
         String bucketName = "stitch-star";
         List<String> iconList = gsdaam.consultIcon();
@@ -311,6 +314,9 @@ public class ScheduledTask {
         }
     }
 
+    /**
+     * 获取觉醒后的技能图标上传阿里云oss
+     */
     public void acquisition_awakening_skills() {
         try {
             List<Integer> allGodId = godmapper.allGodId();
@@ -431,4 +437,10 @@ public class ScheduledTask {
             throw new RuntimeException(e);
         }
     }
+
+
+    public void acquisditon_god_data(){
+
+    }
+
 }
