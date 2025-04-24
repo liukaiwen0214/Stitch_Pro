@@ -39,4 +39,9 @@ class ScheduledTaskTest {
     void acquisition_awakening_skills() {
         scheduledTask.acquisition_awakening_skills();
     }
+
+    @Test
+    void acquisditon_god_data(){
+        scheduledTask.acquisditon_god_data();
+    }
 }

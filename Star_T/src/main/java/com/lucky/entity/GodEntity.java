@@ -1,10 +1,13 @@
 package com.lucky.entity;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
  * 用来生成主页的随机式神展示的实体类
  */
+@Data
 public class GodEntity {
     /**
      * parameters：id,level,name
@@ -22,68 +25,6 @@ public class GodEntity {
     private String cv;
     //式神传记
     private List<String> story;
-
-    public GodEntity() {
-    }
-
-    public GodEntity(int id, String level, String name) {
-        this.id = id;
-        this.level = level;
-        this.name = name;
-    }
-
-    public GodEntity(String cv, List<String> story) {
-        this.cv = cv;
-        this.story = story;
-    }
-
-    public GodEntity(int id, String level, String name, String cv, List<String> story) {
-        this.id = id;
-        this.level = level;
-        this.name = name;
-        this.cv = cv;
-        this.story = story;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCv() {
-        return cv;
-    }
-
-    public void setCv(String cv) {
-        this.cv = cv;
-    }
-
-    public List<String> getStory() {
-        return story;
-    }
-
-    public void setStory(List<String> story) {
-        this.story = story;
-    }
 
     @Override
     public String toString() {

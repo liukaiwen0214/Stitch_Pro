@@ -1,6 +1,5 @@
 package com.lucky.entity;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -8,8 +7,8 @@ import java.math.BigDecimal;
 @Data
 @TableName("god_data_after_awakening")
 public class GodDataAfterAwakeningEntity {
-    private Long godId;
-    private JSONObject awakeitem;
+    private Integer god_id;
+    private String awakeitem;
     private BigDecimal critpower;
     private String bodyicon;
     private BigDecimal initturnpos;
@@ -20,7 +19,7 @@ public class GodDataAfterAwakeningEntity {
     private BigDecimal hurtadditionrate;
     private String headicon;
     private BigDecimal attack;
-    private JSONObject score;
+    private String score;
     private BigDecimal maxhp;
     private BigDecimal debuffresist;
     private BigDecimal dodge;

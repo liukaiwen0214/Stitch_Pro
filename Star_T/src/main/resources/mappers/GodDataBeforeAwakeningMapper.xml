@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lucky.mapper.GodDataBeforeAwakeningMapper">
+    <insert id="addGodData">
+        insert into god_data_before_awakening (god_id, awakeitem, critpower, bodyicon, initturnpos, debuffenhance,
+                                              defense, speed, hurtreboundrate, hurtadditionrate, headicon, attack,
+                                              score, maxhp, debuffresist, dodge, debuffreflect, revenge,
+                                              curedstrenthrate, icon, leechrate, kogainhprate, critrate,
+                                              curestrenthrate, kogainmp, hurtreductionrate)
+        VALUES (#{god_id}, #{awakeitem}, #{critpower}, #{bodyicon}, #{initturnpos}, #{debuffenhance},
+                #{defense}, #{speed}, #{hurtreboundrate}, #{hurtadditionrate}, #{headicon}, #{attack},
+                #{score}, #{maxhp}, #{debuffresist}, #{dodge}, #{debuffreflect}, #{revenge},
+                #{curedstrenthrate}, #{icon}, #{leechrate}, #{kogainhprate}, #{critrate},
+                #{curestrenthrate}, #{kogainmp}, #{hurtreductionrate})
+    </insert>
+
+    <select id="consultId" resultType="java.lang.Integer">
+        select count(*) from god_data_before_awakening where god_id = #{god_id};
+    </select>
+</mapper>

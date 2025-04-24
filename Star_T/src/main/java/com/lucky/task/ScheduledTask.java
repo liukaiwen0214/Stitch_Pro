@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 @Component
 public class ScheduledTask {
     @Autowired
-    private GodBasicInformationMapper godmapper;
+    private GodBasicInformationMapper gbim;
     @Autowired
     private GodBiographiesMapper gbm;
     @Autowired
@@ -36,6 +36,10 @@ public class ScheduledTask {
     private GodSkillDetailBeforeAwakeningMapper gsdbam;
     @Autowired
     private GodSkillDetailAfterAwakeningMapper gsdaam;
+    @Autowired
+    private GodDataAfterAwakeningMapper gdaam;
+    @Autowired
+    private GodDataBeforeAwakeningMapper gdbam;
 
     private final HttpUtils httpUtils = new HttpUtils();
 
@@ -48,7 +52,6 @@ public class ScheduledTask {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("定时任务执行时间: " + sdf.format(new Date()));
         // 这里可以添加你要执行的具体业务逻辑
-        System.out.println(godmapper);
         try {
             URL url = new URL("https://yys.res.netease.com/pc/zt/20161108171335/js/app/all_shishen.json");
             String baseStoryUrl = "https://g37simulator.webapp.163.com/get_hero_story?heroid=";
@@ -70,7 +73,7 @@ public class ScheduledTask {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     god.setGod_id(Integer.valueOf(jsonArray.getJSONObject(i).getString("id")));
                     ids.add(Integer.valueOf(jsonArray.getJSONObject(i).getString("id")));
-                    if (godmapper.consultGod(Integer.valueOf(jsonArray.getJSONObject(i).getString("id"))) > 0) {
+                    if (gbim.consultGod(Integer.valueOf(jsonArray.getJSONObject(i).getString("id"))) > 0) {
                         // System.out.println("式神id存在" + jsonArray.getJSONObject(i).getString("id"));
                         continue;
                     }
@@ -92,7 +95,7 @@ public class ScheduledTask {
                             god.setGod_rarity(5);
                             break;
                     }
-                    if (godmapper.increaseGod(god) > 0) {
+                    if (gbim.increaseGod(god) > 0) {
                         System.out.println(jsonArray.getJSONObject(i).getString("name") + "添加成功！");
                     }
                 }
@@ -194,12 +197,12 @@ public class ScheduledTask {
                                     break;
                             }
                             if (gbm.consultGodStory(godBiographies.getGod_id()) > 0) {
-//                                logger.info(godBiographies.getGod_id() + "在数据库中存在！");
+                                logger.info(godBiographies.getGod_id() + "在数据库中存在！");
                             } else {
                                 if (gbm.increaseGodStory(godBiographies) > 0) {
-//                                    System.out.println(godBiographies.getGod_id() + "添加成功！");
+                                    System.out.println(godBiographies.getGod_id() + "添加成功！");
                                 } else {
-//                                    System.out.println(godBiographies.getGod_id() + "添加失败");
+                                    System.out.println(godBiographies.getGod_id() + "添加失败");
                                 }
                             }
                         } else {
@@ -216,6 +219,7 @@ public class ScheduledTask {
         acquisditon_godimages();
         acquisditon_godskillimages();
         acquisition_awakening_skills();
+        acquisditon_god_data();
     }
 
     /**
@@ -224,7 +228,7 @@ public class ScheduledTask {
     public void acquisition_skills() {
         //获取式神基本信息,添加ID
         try {
-            List<Integer> allGodId = godmapper.allGodId();
+            List<Integer> allGodId = gbim.allGodId();
             for (int idcount = 0; idcount < allGodId.size(); idcount++) {
                 String basicUrl = "https://g37simulator.webapp.163.com/get_hero_skill?awake=0&level=0&star=2&heroid=";
                 basicUrl = basicUrl + allGodId.get(idcount);
@@ -275,10 +279,10 @@ public class ScheduledTask {
                                     gsdbam.addGodSkillDetailBeforeAwakening(gsdbae);
                                 }
                             } else {
-//                                System.out.println("技能ID：" + allGodId.get(idcount) + "" + (skillcount + 1) + "在数据库中存在");
+                                System.out.println("技能ID：" + allGodId.get(idcount)  + (skillcount + 1) + "在数据库中存在");
                             }
                         } else {
-//                            System.out.println("技能ID：" + allGodId.get(idcount) + "" + (skillcount + 1) + "为空");
+                            System.out.println("技能ID：" + allGodId.get(idcount)  + (skillcount + 1) + "为空");
                         }
                     }
                 }
@@ -293,7 +297,7 @@ public class ScheduledTask {
      */
     public void acquisditon_godimages() {
         String bucketName = "stitch-star";
-        for (Integer integer : godmapper.allGodId()) {
+        for (Integer integer : gbim.allGodId()) {
             // 指定存储位置，例如存储在 images 目录下，文件名为 test.jpg
             String objectName = "onmyoji/images/godimg/" + integer + ".png";
             String fileUrl = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen/" + integer + ".png";
@@ -319,7 +323,7 @@ public class ScheduledTask {
      */
     public void acquisition_awakening_skills() {
         try {
-            List<Integer> allGodId = godmapper.allGodId();
+            List<Integer> allGodId = gbim.allGodId();
             for (int idcount = 0; idcount < allGodId.size(); idcount++) {
                 String basicUrl = "https://g37simulator.webapp.163.com/get_hero_skill?awake=1&level=0&star=2&heroid=";
                 basicUrl = basicUrl + allGodId.get(idcount);
@@ -439,8 +443,142 @@ public class ScheduledTask {
     }
 
 
-    public void acquisditon_god_data(){
-
+    /**
+     * 获取式神觉醒前后的基本属性
+     */
+    public void acquisditon_god_data() {
+        //觉醒前
+        String url = "https://g37simulator.webapp.163.com/get_hero_attr?awake=0&level=1&star=2&heroid=";
+        List<Integer> god_ids = gbim.allGodId();
+        for (Integer god_id : god_ids) {
+            if (gdaam.consultId(god_id) <= 0) {
+                GodDataAfterAwakeningEntity gdaae = new GodDataAfterAwakeningEntity();
+                try {
+                    JSONObject jsonObject = httpUtils.sendGetRequest(url + god_id);
+                    //式神ID
+                    gdaae.setGod_id(god_id);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    //awakeitem（觉醒材料）
+                    gdaae.setAwakeitem(data.getString("awakeitem"));
+                    //critPower（暴击伤害）
+                    gdaae.setCritpower(data.getBigDecimal("critPower"));
+                    //bodyicon（身体图标）
+                    gdaae.setBodyicon(data.getString("bodyicon"));
+                    //initTurnPos（初始出手顺位）
+                    gdaae.setInitturnpos(data.getBigDecimal("initTurnPos"));
+                    //debuffEnhance（减益强化）
+                    gdaae.setDebuffenhance(data.getBigDecimal("debuffEnhance"));
+                    //defense（防御）
+                    gdaae.setDefense(data.getBigDecimal("defense"));
+                    //speed（速度）
+                    gdaae.setSpeed(data.getBigDecimal("speed"));
+                    //hurtReboundRate（伤害反弹率）
+                    gdaae.setHurtreboundrate(data.getBigDecimal("hurtReboundRate"));
+                    //hurtAdditionRate（伤害加成率）
+                    gdaae.setHurtadditionrate(data.getBigDecimal("hurtAdditionRate"));
+                    //headicon（头像图标）
+                    gdaae.setHeadicon(data.getString("headicon"));
+                    //attack（攻击）
+                    gdaae.setAttack(data.getBigDecimal("attack"));
+                    //score（评分）
+                    gdaae.setScore(data.getString("score"));
+                    //maxHp（最大生命值）
+                    gdaae.setMaxhp(data.getBigDecimal("maxHp"));
+                    //debuffResist（减益抵抗）
+                    gdaae.setDebuffresist(data.getBigDecimal("debuffResist"));
+                    //dodge（闪避）
+                    gdaae.setDodge(data.getBigDecimal("dodge"));
+                    //debuffReflect（减益反射）
+                    gdaae.setDebuffreflect(data.getInteger("debuffReflect"));
+                    //revenge（反击）
+                    gdaae.setRevenge(data.getBigDecimal("revenge"));
+                    //curedStrenthRate（受治疗强度率）
+                    gdaae.setCuredstrenthrate(data.getBigDecimal("curedStrenthRate"));
+                    //icon（图标）
+                    gdaae.setIcon(data.getString("icon"));
+                    //leechRate（吸血率）
+                    gdaae.setLeechrate(data.getBigDecimal("leechRate"));
+                    //koGainHPRate（击杀回血率）
+                    gdaae.setKogainhprate(data.getBigDecimal("koGainHPRate"));
+                    //critRate（暴击率）
+                    gdaae.setCritrate(data.getBigDecimal("critRate"));
+                    //cureStrenthRate（治疗强度率）
+                    gdaae.setCurestrenthrate(data.getBigDecimal("cureStrenthRate"));
+                    //koGainMP（击杀回蓝）
+                    gdaae.setKogainmp(data.getInteger("koGainMP"));
+                    //hurtReductionRate (伤害减免率）
+                    gdaae.setHurtreductionrate(data.getBigDecimal("hurtReductionRate"));
+                    if (gdaam.addGodData(gdaae) > 0) {
+                        logger.info(god_id + "添加成功");
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if (gdbam.consultId(god_id) <= 0) {
+                GodDataBeforeAwakeningEntity gdbae = new GodDataBeforeAwakeningEntity();
+                try {
+                    JSONObject jsonObject = httpUtils.sendGetRequest(url + god_id);
+                    //式神ID
+                    gdbae.setGod_id(god_id);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    //awakeitem（觉醒材料）
+                    gdbae.setAwakeitem(data.getString("awakeitem"));
+                    //critPower（暴击伤害）
+                    gdbae.setCritpower(data.getBigDecimal("critPower"));
+                    //bodyicon（身体图标）
+                    gdbae.setBodyicon(data.getString("bodyicon"));
+                    //initTurnPos（初始出手顺位）
+                    gdbae.setInitturnpos(data.getBigDecimal("initTurnPos"));
+                    //debuffEnhance（减益强化）
+                    gdbae.setDebuffenhance(data.getBigDecimal("debuffEnhance"));
+                    //defense（防御）
+                    gdbae.setDefense(data.getBigDecimal("defense"));
+                    //speed（速度）
+                    gdbae.setSpeed(data.getBigDecimal("speed"));
+                    //hurtReboundRate（伤害反弹率）
+                    gdbae.setHurtreboundrate(data.getBigDecimal("hurtReboundRate"));
+                    //hurtAdditionRate（伤害加成率）
+                    gdbae.setHurtadditionrate(data.getBigDecimal("hurtAdditionRate"));
+                    //headicon（头像图标）
+                    gdbae.setHeadicon(data.getString("headicon"));
+                    //attack（攻击）
+                    gdbae.setAttack(data.getBigDecimal("attack"));
+                    //score（评分）
+                    gdbae.setScore(data.getString("score"));
+                    //maxHp（最大生命值）
+                    gdbae.setMaxhp(data.getBigDecimal("maxHp"));
+                    //debuffResist（减益抵抗）
+                    gdbae.setDebuffresist(data.getBigDecimal("debuffResist"));
+                    //dodge（闪避）
+                    gdbae.setDodge(data.getBigDecimal("dodge"));
+                    //debuffReflect（减益反射）
+                    gdbae.setDebuffreflect(data.getInteger("debuffReflect"));
+                    //revenge（反击）
+                    gdbae.setRevenge(data.getBigDecimal("revenge"));
+                    //curedStrenthRate（受治疗强度率）
+                    gdbae.setCuredstrenthrate(data.getBigDecimal("curedStrenthRate"));
+                    //icon（图标）
+                    gdbae.setIcon(data.getString("icon"));
+                    //leechRate（吸血率）
+                    gdbae.setLeechrate(data.getBigDecimal("leechRate"));
+                    //koGainHPRate（击杀回血率）
+                    gdbae.setKogainhprate(data.getBigDecimal("koGainHPRate"));
+                    //critRate（暴击率）
+                    gdbae.setCritrate(data.getBigDecimal("critRate"));
+                    //cureStrenthRate（治疗强度率）
+                    gdbae.setCurestrenthrate(data.getBigDecimal("cureStrenthRate"));
+                    //koGainMP（击杀回蓝）
+                    gdbae.setKogainmp(data.getInteger("koGainMP"));
+                    //hurtReductionRate (伤害减免率）
+                    gdbae.setHurtreductionrate(data.getBigDecimal("hurtReductionRate"));
+                    if (gdbam.addGodData(gdbae) > 0) {
+                        logger.info(god_id + "添加成功");
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
-
 }

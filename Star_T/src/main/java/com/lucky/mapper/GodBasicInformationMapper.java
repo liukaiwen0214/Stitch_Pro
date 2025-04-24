@@ -24,5 +24,9 @@ public interface GodBasicInformationMapper {
      */
     int consultGod(Integer god_id);
 
+    /**
+     * 获取所有式神ID
+     * @return 返回ID集合
+     */
     List<Integer> allGodId();
 }
