@@ -115,7 +115,7 @@ public class AliyunOSSUtil {
             PutObjectResult result = ossClient.putObject(putObjectRequest);
 //            System.out.println("文件从 URL 上传成功: " + objectName + ", ETag: " + result.getETag());
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             System.err.println("文件从 URL 上传失败: " + e.getMessage());
         } finally {
             ossClient.shutdown();

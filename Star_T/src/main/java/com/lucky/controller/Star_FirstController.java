@@ -21,13 +21,17 @@ import java.util.regex.Pattern;
 
 @Controller
 public class Star_FirstController {
-    @Autowired
-    private AuthUsersSerivce authUsersSerivce;
+    private final GodService godService;
+    private final AuthUsersSerivce authUsersSerivce; // 声明为 final（不可变）
+    // 构造函数注入（Spring 4.3+ 后无需显式 @Autowired，构造函数唯一时可省略）
+    @Autowired // 非必需，仅在有多个构造函数时需要
+    public Star_FirstController(GodService godService,AuthUsersSerivce authUsersSerivce) {
+        this.godService = godService;
+        this.authUsersSerivce = authUsersSerivce;
+    }
 
-    @Autowired
-    private GodService godService;
 
-    private Logger logger = Logger.getLogger(Star_FirstController.class.getName());
+    private final Logger logger = Logger.getLogger(Star_FirstController.class.getName());
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String PHONE_REGEX = "^1[3-9]\\d{9}$";

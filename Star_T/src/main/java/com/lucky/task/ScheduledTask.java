@@ -7,7 +7,6 @@ import com.lucky.entity.*;
 import com.lucky.mapper.*;
 import com.lucky.util.AliyunOSSUtil;
 import com.lucky.util.HttpUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -26,25 +25,27 @@ import java.util.regex.Pattern;
 
 @Component
 public class ScheduledTask {
-    @Autowired
-    private GodBasicInformationMapper gbim;
-    @Autowired
-    private GodBiographiesMapper gbm;
-    @Autowired
-    private GodSkillBasicBeforeAwakeningMapper gsbbam;
-    @Autowired
-    private GodSkillDetailBeforeAwakeningMapper gsdbam;
-    @Autowired
-    private GodSkillDetailAfterAwakeningMapper gsdaam;
-    @Autowired
-    private GodDataAfterAwakeningMapper gdaam;
-    @Autowired
-    private GodDataBeforeAwakeningMapper gdbam;
+    private final GodBasicInformationMapper gbim;
+    private final GodBiographiesMapper gbm;
+    private final GodSkillBasicBeforeAwakeningMapper gsbbam;
+    private final GodSkillDetailBeforeAwakeningMapper gsdbam;
+    private final GodSkillDetailAfterAwakeningMapper gsdaam;
+    private final GodDataAfterAwakeningMapper gdaam;
+    private final GodDataBeforeAwakeningMapper gdbam;
 
     private final HttpUtils httpUtils = new HttpUtils();
 
     private final Logger logger = Logger.getLogger(ScheduledTask.class.getName());
 
+    public ScheduledTask(GodBasicInformationMapper gbim, GodBiographiesMapper gbm, GodSkillBasicBeforeAwakeningMapper gsbbam, GodSkillDetailBeforeAwakeningMapper gsdbam, GodSkillDetailAfterAwakeningMapper gsdaam, GodDataAfterAwakeningMapper gdaam, GodDataBeforeAwakeningMapper gdbam) {
+        this.gbim = gbim;
+        this.gbm = gbm;
+        this.gsbbam = gsbbam;
+        this.gsdbam = gsdbam;
+        this.gsdaam = gsdaam;
+        this.gdaam = gdaam;
+        this.gdbam = gdbam;
+    }
 
     // 每天凌晨 2 点执行
     @Scheduled(cron = "0 0 2 * * ?")
@@ -279,10 +280,10 @@ public class ScheduledTask {
                                     gsdbam.addGodSkillDetailBeforeAwakening(gsdbae);
                                 }
                             } else {
-                                System.out.println("技能ID：" + allGodId.get(idcount)  + (skillcount + 1) + "在数据库中存在");
+                                System.out.println("技能ID：" + allGodId.get(idcount) + (skillcount + 1) + "在数据库中存在");
                             }
                         } else {
-                            System.out.println("技能ID：" + allGodId.get(idcount)  + (skillcount + 1) + "为空");
+                            System.out.println("技能ID：" + allGodId.get(idcount) + (skillcount + 1) + "为空");
                         }
                     }
                 }

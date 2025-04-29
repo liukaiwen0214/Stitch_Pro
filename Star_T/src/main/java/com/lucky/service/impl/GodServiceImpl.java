@@ -167,7 +167,7 @@ public class GodServiceImpl implements GodService {
             }
         } catch (IOException e) {
             // 打印异常信息
-            e.printStackTrace();
+//            e.printStackTrace();
             // 可以考虑抛出更具体的异常或者记录日志
         }
         return godEntity;
@@ -223,10 +223,12 @@ public class GodServiceImpl implements GodService {
     public static void getGodImage(List<Integer> id) {
         String imageUrl = "https://yys.res.netease.com/pc/zt/20161108171335/data/shishen/";
         String savePath = "/Users/Stitch/Documents/刘凯文的MacBook Air/PersonalSpace/stitch_pro/Star_T/src/main/webapp/static/image/godAvatar/";
+        /*
         File directory = new File(savePath);
         if (!directory.exists()) {
             directory.mkdirs(); // 创建多级目录
         }
+         */
         for (int i = 0; i < id.size(); i++) {
             String fileName = id.get(i) + ".png";
             File file = new File(savePath + fileName);
@@ -243,7 +245,7 @@ public class GodServiceImpl implements GodService {
                 }
                 System.out.println("图片下载成功！保存路径：" + file.getAbsolutePath());
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 System.out.println("图片 " + fileName + " 下载失败：" + e.getMessage());
             }
         }

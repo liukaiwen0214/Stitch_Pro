@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthUsersSerivceImpl implements AuthUsersSerivce {
+    private final AuthUserEntityMapper authUserEntityMapper;
+
     @Autowired
-    private AuthUserEntityMapper authUserEntityMapper;
+    public AuthUsersSerivceImpl(AuthUserEntityMapper authUserEntityMapper) {
+        this.authUserEntityMapper = authUserEntityMapper;
+    }
 
     /**
      * 登陆方法
@@ -36,11 +40,11 @@ public class AuthUsersSerivceImpl implements AuthUsersSerivce {
             System.out.println("1");
             if (authUserEntityMapper.consultUser_id() == null) {
                 authUsersEntity.setUser_id(1);
-                System.out.println("要添加的用户是2：" + authUsersEntity.toString());
+                System.out.println("要添加的用户是2：" + authUsersEntity);
                 return authUserEntityMapper.increaseUser(authUsersEntity) > 0;
             }
             authUsersEntity.setUser_id(authUserEntityMapper.consultUser_id() + 1);
-            System.out.println("要添加的用户是3：" + authUsersEntity.toString());
+            System.out.println("要添加的用户是3：" + authUsersEntity);
             return authUserEntityMapper.increaseUser(authUsersEntity) > 0;
         }
         System.out.println(authUsersEntity.getUser_name() + "用户存在于数据库中");

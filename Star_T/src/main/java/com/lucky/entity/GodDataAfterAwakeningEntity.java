@@ -1,11 +1,10 @@
 package com.lucky.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.math.BigDecimal;
+
 @Data
-@TableName("god_data_after_awakening")
 public class GodDataAfterAwakeningEntity {
     private Integer god_id;
     private String awakeitem;
