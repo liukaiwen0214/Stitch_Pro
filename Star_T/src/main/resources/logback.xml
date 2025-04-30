@@ -1,0 +1,71 @@
+<configuration>
+    <!-- 定义日志文件的存储路径为 src/main/resources -->
+    <property name="LOG_DIR" value="src/main/resources/logs" />
+
+    <!-- 彩色控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight([%thread]) %highlight(%-5level) %highlight(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 按时间和大小滚动的文件输出 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 每个日志文件最大 10MB -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 最多保留 30 天的日志文件 -->
+            <maxHistory>30</maxHistory>
+            <!-- 所有归档日志文件总大小不超过 1GB -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 异步日志输出，提高性能 -->
+    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE" />
+        <!-- 队列大小 -->
+        <queueSize>512</queueSize>
+        <!-- 丢弃日志的阈值 -->
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <!-- 自定义日志级别 -->
+    <!-- 假设你的项目包名为 com.lucky，需替换为实际包名 -->
+    <logger name="com.lucky" level="info" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ASYNC_FILE" />
+    </logger>
+
+    <!-- 禁用系统和第三方库的日志 -->
+    <logger name="org.springframework" level="OFF" />
+    <logger name="org.mybatis" level="OFF" />
+    <logger name="ch.qos.logback" level="OFF" />
+    <logger name="com.alibaba.druid" level="OFF" />
+    <logger name="ch.qos.logback.classic" level="OFF"/>
+    <logger name="ch.qos.logback.core" level="OFF"/>
+    <!-- 可以根据实际情况添加更多需要禁用的日志 -->
+
+    <!-- 根日志配置，设置为 OFF 以避免默认输出 -->
+    <root level="OFF">
+    </root>
+
+    <!-- 定义日志级别颜色映射 -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener">
+        <highlighting>true</highlighting>
+        <colorMap>
+            <error>RED</error>
+            <warn>YELLOW</warn>
+            <info>GREEN</info>
+            <debug>CYAN</debug>
+            <trace>BLUE</trace>
+        </colorMap>
+    </statusListener>
+</configuration>

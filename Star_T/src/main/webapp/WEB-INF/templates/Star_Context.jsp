@@ -22,8 +22,16 @@
 
         </span>
     </div>
-    <div id="personStory">
-
+    <div id="skills">
+        <div id="skill1" class="skillimg">
+            <img id="skill1image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="80" width="80">
+        </div>
+        <div id="skill2" class="skillimg">
+            <img id="skill2image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="80" width="80">
+        </div>
+        <div id="skill3" class="skillimg">
+            <img id="skill3image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="80" width="80">
+        </div>
     </div>
 </div>
 <div class="chat-container-wrapper">

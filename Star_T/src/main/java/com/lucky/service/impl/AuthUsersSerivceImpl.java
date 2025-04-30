@@ -37,7 +37,6 @@ public class AuthUsersSerivceImpl implements AuthUsersSerivce {
     @Override
     public boolean registerUser(AuthUsersEntity authUsersEntity) {
         if (authUserEntityMapper.consultUser(authUsersEntity) <= 0) {
-            System.out.println("1");
             if (authUserEntityMapper.consultUser_id() == null) {
                 authUsersEntity.setUser_id(1);
                 System.out.println("要添加的用户是2：" + authUsersEntity);

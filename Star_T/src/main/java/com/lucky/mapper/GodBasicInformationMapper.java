@@ -29,4 +29,10 @@ public interface GodBasicInformationMapper {
      * @return 返回ID集合
      */
     List<Integer> allGodId();
+
+    /**
+     * 获取所有式神信息
+     * @return 式神集合
+     */
+    List<GodBasicInformationEntity> getGodRarity();
 }

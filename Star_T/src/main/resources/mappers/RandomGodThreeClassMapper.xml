@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lucky.mapper.RandomGodThreeClassMapper">
+    <resultMap id="RandomGodEntityMap" type="com.lucky.entity.RandomGodThreeClassEntity">
+        <association property="gbi" javaType="com.lucky.entity.GodBasicInformationEntity">
+            <!-- 映射 gbi 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="god_name" column="god_name"/>
+            <result property="god_rarity" column="god_rarity"/>
+        </association>
+        <association property="gb" javaType="com.lucky.entity.GodBiographies">
+            <!-- 映射 gb 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="god_cv" column="god_cv"/>
+            <result property="story1" column="story1"/>
+            <result property="story2" column="story2"/>
+            <result property="story3" column="story3"/>
+            <result property="story4" column="story4"/>
+            <result property="story5" column="story5"/>
+            <result property="story6" column="story6"/>
+            <result property="story7" column="story7"/>
+            <result property="story8" column="story8"/>
+            <result property="story9" column="story9"/>
+        </association>
+        <association property="gsbba" javaType="com.lucky.entity.GodSkillBasicBeforeAwakeningEntity">
+            <!-- 映射 gsbba 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="skill_id" column="skill_id"/>
+            <result property="skill_name" column="skill_name"/>
+            <result property="skill_detail" column="skill_detail"/>
+            <result property="skill_icon" column="skill_icon"/>
+        </association>
+    </resultMap>
+
+
+    <select id="getRandomGod" resultMap="RandomGodEntityMap">
+        SELECT
+            gbi.*,
+            gb.*,
+            gsbba.*
+        FROM
+            god_basic_information gbi
+                JOIN
+            god_biographies gb ON gbi.god_id = gb.god_id
+                JOIN
+            god_skill_basic_before_awakening gsbba ON gbi.god_id = gsbba.god_id
+        WHERE
+            gb.god_id = #{god_id}
+        ORDER BY gsbba.skill_id;
+    </select>
+</mapper>

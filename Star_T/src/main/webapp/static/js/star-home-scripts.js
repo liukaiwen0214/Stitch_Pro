@@ -76,7 +76,9 @@ function handleZhuyeClick() {
                     const personImg = iframeDoc.getElementById('personImg_img');
                     const personName = iframeDoc.getElementById('personName');
                     const personDiv = iframeDoc.getElementById('personImg_div');
-                    const personStory = iframeDoc.getElementById('personStory');
+                    const skill1image = iframeDoc.getElementById('skill1image');
+                    const skill2image = iframeDoc.getElementById('skill2image');
+                    const skill3image = iframeDoc.getElementById('skill3image');
                     if (container) {
                         // console.log('成功获取到 container 元素:', container);
                         getcanvas(rarityColors, requestUrl, container);
@@ -85,7 +87,7 @@ function handleZhuyeClick() {
                     }
                     if (personImg) {
                         // console.log('成功获取到 personImg_img 元素:', personImg);
-                        fetchRandomGod(requestUrl, personDiv, personImg, personName, personStory);
+                        fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1image, skill2image, skill3image);
                         // 在这里可以对 personImg_img 元素进行操作
                     } else {
                         console.log('未找到 personImg_img 元素，尝试使用 MutationObserver 监听');
@@ -95,13 +97,15 @@ function handleZhuyeClick() {
                                     const newPersonImg = iframeDoc.getElementById('personImg_img');
                                     const personName = iframeDoc.getElementById('personName');
                                     const personDiv = iframeDoc.getElementById('personImg_div');
-                                    const personStory = iframeDoc.getElementById('personStory');
+                                    const skill1image = iframeDoc.getElementById('skill1image');
+                                    const skill2image = iframeDoc.getElementById('skill2image');
+                                    const skill3image = iframeDoc.getElementById('skill3image');
                                     if (newPersonImg) {
                                         console.log('通过 MutationObserver 成功获取到 personImg_img 元素:', newPersonImg);
                                         // 不再需要监听，断开连接
                                         observer.disconnect();
                                         // 在这里可以对 newPersonImg 元素进行操作
-                                        fetchRandomGod(requestUrl, personDiv, newPersonImg, personName, personStory);
+                                        fetchRandomGod(requestUrl, personDiv, newPersonImg, personName, skill1image, skill2image, skill3image);
                                     }
                                 }
                             }
@@ -147,40 +151,39 @@ fetch(requestUrl + '/currentUser').then(response => response.json()).then(data =
 });
 
 /**
- * 定义查询式神方法
+ * 随机式神展示方法
  */
-function fetchRandomGod(requestUrl, personDiv, personImg, personName, personStory) {
+function fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1image, skill2image, skill3image) {
     fetch(requestUrl + '/getRandomGod', {method: 'GET'}).then(response => response.json()).then(data => {
         console.info(data);
-        personImg.src = requestUrl + '/static/image/godAvatar/' + data.id + '.png';
-        switch (data.level) {
-            case "N":
+        personImg.src = data.godavatar;
+        switch (data.god_rarity) {
+            case 1:
                 personDiv.style.backgroundColor = "#bbe0ec";
                 break;
-            case "R":
+            case 2:
                 personDiv.style.backgroundColor = "#76c33a";
                 break;
-            case "SR":
+            case 3:
                 personDiv.style.backgroundColor = "#7900da";
                 break;
-            case "SSR":
+            case 4:
                 personDiv.style.backgroundColor = "#fabe41";
                 break;
-            case "SP":
+            case 5:
                 personDiv.style.backgroundColor = "#bd0000";
                 break;
             default :
                 personDiv.style.backgroundColor = "#ffffff";
         }
-        personImg.title = data.name;
-        personName.querySelector("span").textContent = data.name;
-        //将传记添加到span中
-        // const storylist = data.story;
-        // storylist.forEach(item => {
-        //     const storyspan = document.createElement("span")
-        //     storyspan.textContent = item;
-        //     personStory.appendChild(storyspan);
-        // })
+        personImg.title = data.god_name;
+        personName.querySelector("span").textContent = data.god_name;
+        skill1image.src = data.skill1icon;
+        skill2image.src = data.skill2icon;
+        skill3image.src = data.skill3icon;
+        skill1image.title = data.skill1name;
+        skill2image.title = data.skill2name;
+        skill3image.title = data.skill3name;
     });
 }
 
@@ -241,6 +244,12 @@ listItems.forEach(item => {
     });
 });
 
+/**
+ * 主页的饼状图
+ * @param rarityColors 颜色
+ * @param requestUrl 接口链接
+ * @param container 饼状图的位置
+ */
 function getcanvas(rarityColors, requestUrl, container) {
     fetch(requestUrl + '/getGodCount').then(response => response.json()).then(data => {
         const echartsData = data.map(item => ({
@@ -252,7 +261,7 @@ function getcanvas(rarityColors, requestUrl, container) {
             const myChart = echarts.init(container, null, {
                 renderer: 'canvas', useDirtyRect: false
             });
-            const app = {};
+            // const app = {};
             let option;
             option = {
                 title: {
@@ -294,10 +303,14 @@ function getcanvas(rarityColors, requestUrl, container) {
     })
 }
 
+/**
+ * childs-kid的点击事件
+ * 当点击时将context-d显示出来
+ */
 childskid.forEach(childonclick => {
-    childonclick.addEventListener('click', function (event) {
+    childonclick.addEventListener('click', function () {
         const url = childonclick.getAttribute("data-menu");
-        // console.info("zhuye click")
+        // console.info(event)
         // 创建 XMLHttpRequest 对象
         const xhr = new XMLHttpRequest();
         // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容

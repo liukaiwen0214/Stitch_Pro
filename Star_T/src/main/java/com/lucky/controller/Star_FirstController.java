@@ -2,9 +2,9 @@ package com.lucky.controller;
 
 
 import com.lucky.entity.AuthUsersEntity;
-import com.lucky.entity.GodEntity;
+import com.lucky.entity.RandomGodEntity;
 import com.lucky.service.AuthUsersSerivce;
-import com.lucky.service.GodService;
+import com.lucky.service.PossessGodService;
 import com.lucky.util.AiChat;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ import java.util.regex.Pattern;
 
 @Controller
 public class Star_FirstController {
-    private final GodService godService;
-    private final AuthUsersSerivce authUsersSerivce; // 声明为 final（不可变）
-    // 构造函数注入（Spring 4.3+ 后无需显式 @Autowired，构造函数唯一时可省略）
-    @Autowired // 非必需，仅在有多个构造函数时需要
-    public Star_FirstController(GodService godService,AuthUsersSerivce authUsersSerivce) {
-        this.godService = godService;
+    private final AuthUsersSerivce authUsersSerivce;// 声明为 final（不可变）
+    private final PossessGodService possessGodService;
+
+    @Autowired
+    public Star_FirstController(AuthUsersSerivce authUsersSerivce, PossessGodService possessGodService) {
         this.authUsersSerivce = authUsersSerivce;
+        this.possessGodService = possessGodService;
     }
 
 
@@ -41,7 +41,7 @@ public class Star_FirstController {
     // 登录接口
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> login(@RequestParam("email") String auth_User,@RequestParam("password") String password, HttpSession session) {
+    public Map<String, Object> login(@RequestParam("email") String auth_User, @RequestParam("password") String password, HttpSession session) {
         Map<String, Object> result = new HashMap<>();
         AuthUsersEntity authUsers = new AuthUsersEntity();
 
@@ -58,6 +58,7 @@ public class Star_FirstController {
             result.put("code", 200);
             result.put("message", "登录成功");
             result.put("redirectUrl", "/Star_Home");
+            logger.info("登陆成功！");
         } else {
             result.put("code", 401);
             result.put("message", "用户名或密码错误");
@@ -92,7 +93,6 @@ public class Star_FirstController {
     @RequestMapping("/Star_Home")
     public String showHomePage(HttpSession session, Model model) {
         Object User_name = session.getAttribute("User_name");
-        System.out.println(User_name);
         model.addAttribute("User_name", User_name);
         return "/Star_Home"; // 对应视图解析器配置的 JSP 文件名
     }
@@ -110,7 +110,8 @@ public class Star_FirstController {
     @GetMapping("/getGodCount")
     @ResponseBody
     public List<Map<String, Object>> countCharactersByRarity() {
-        return godService.getGodCount();
+        logger.info("获取式神稀有度数量统计成功！");
+        return possessGodService.godCount();
     }
 
 
@@ -129,7 +130,7 @@ public class Star_FirstController {
 
     @GetMapping("/getRandomGod")
     @ResponseBody
-    public GodEntity getRandomGod() {
-        return godService.getRandomGod();
+    public RandomGodEntity getRandomGod() {
+        return possessGodService.random_god();
     }
 }

@@ -108,10 +108,6 @@ body {
     /* 设置变换的中心点 */
     transform-origin: center;
 }
-#random_person:hover{
-    /* 悬浮时放大 1.1 倍 */
-    transform: scale(1.01);
-}
 #personImg_div{
     position:fixed;
     border-radius:60px;
@@ -120,6 +116,16 @@ body {
     position:absolute;
     font-size:23px;
     top:130px;
-    border:1px solid red;
+    /* border:1px solid red; */
 }
-
+#skills{
+    position:fixed;
+    /* border:1px red solid; */
+    display: flex;
+    padding:10px;
+    top:200px;
+}
+.skillimg{
+    margin:20px;
+    /*border:2px green solid;*/
+}

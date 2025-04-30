@@ -4,8 +4,13 @@ import lombok.Data;
 
 @Data
 public class GodBiographies {
+    //式神ID
     private Integer god_id;
+    //式神cv
     private String god_cv;
+    /**
+     * 式神传记
+     */
     private String story1;
     private String story2;
     private String story3;

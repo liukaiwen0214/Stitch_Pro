@@ -15,4 +15,7 @@
     <select id="allGodId" resultType="java.lang.Integer">
         select god_id from god_basic_information;
     </select>
+    <select id="getGodRarity" resultType="com.lucky.entity.GodBasicInformationEntity">
+        select * from god_basic_information;
+    </select>
 </mapper>
