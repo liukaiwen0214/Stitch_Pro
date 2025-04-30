@@ -2,10 +2,6 @@ package com.lucky.util;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.model.GetObjectRequest;
-import com.aliyun.oss.model.PutObjectRequest;
-import com.aliyun.oss.model.PutObjectResult;
-
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
