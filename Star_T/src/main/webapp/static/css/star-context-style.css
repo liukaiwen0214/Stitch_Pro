@@ -110,9 +110,7 @@ body {
     box-sizing: border-box;
     backdrop-filter: blur(6px);
     transition: all 0.5s;
-    display: flex;
     align-items: center;
-    justify-content: center;
     user-select: none;
     font-weight: bolder;
     color: black;
