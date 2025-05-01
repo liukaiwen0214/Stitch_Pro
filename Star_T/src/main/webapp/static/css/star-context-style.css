@@ -16,7 +16,9 @@ body {
     width: 25rem;
     height: 25rem;
     border:1px solid #f4f4f4;
+    border-radius:15px;
 }
+
 /* 整体容器样式 */
 .chat-container-wrapper {
     position:absolute;
@@ -91,41 +93,60 @@ body {
 .input-container button:hover {
     background-color: #2563eb;
 }
-#random_person{
-    position:fixed;
-    border:1px solid red;
+.random_person {
+    position: fixed;
+    border: 1px solid #e5e7eb;
     display: flex;
     justify-content: center;
     /* align-items: center; */
-    height:400px;
-    width:522px;
-    top:15px;
-    left:28%;
+    height: 400px;
+    width: 270px;
+    top: 15px;
+    left: 28%;
     /* 添加鼠标悬浮样式 */
     cursor: pointer;
-    /* 添加过渡动画 */
-    transition: transform 0.3s ease;
     /* 设置变换的中心点 */
     transform-origin: center;
+    box-sizing: border-box;
+    backdrop-filter: blur(6px);
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+    border-radius:15px;
 }
+
+.random_person:hover {
+    border: 1px solid #00000078;
+    transform: scale(1.005);
+}
+
+.random_person:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+}
+
 #personImg_div{
-    position:fixed;
+    position:absolute;
     border-radius:60px;
+    top:40px;
 }
 #personName{
     position:absolute;
     font-size:23px;
-    top:130px;
+    top:180px;
     /* border:1px solid red; */
 }
 #skills{
-    position:fixed;
+    position:absolute;
     /* border:1px red solid; */
     display: flex;
     padding:10px;
-    top:200px;
+    top:220px;
 }
 .skillimg{
-    margin:20px;
+    margin:10px;
     /*border:2px green solid;*/
 }

@@ -24,13 +24,30 @@
     </div>
     <div id="skills">
         <div id="skill1" class="skillimg">
-            <img id="skill1image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="80" width="80">
+            <img id="skill1image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="60" width="60">
         </div>
         <div id="skill2" class="skillimg">
-            <img id="skill2image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="80" width="80">
+            <img id="skill2image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="60" width="60">
         </div>
         <div id="skill3" class="skillimg">
-            <img id="skill3image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="80" width="80">
+            <img id="skill3image" class="skillimgs" src="" alt="加载失败" crossorigin="anonymous" title="" height="60" width="60">
+        </div>
+    </div>
+    <div id="descriptive">
+        <div class="tooltip">
+            <span class="skill_descriptive">
+
+            </span>
+        </div>
+        <div class="tooltip">
+            <span class="skill_descriptive">
+
+            </span>
+        </div>
+        <div class="tooltip">
+            <span class="skill_descriptive">
+
+            </span>
         </div>
     </div>
 </div>
