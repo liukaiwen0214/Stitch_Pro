@@ -44,24 +44,43 @@ public class Star_FirstController {
     public Map<String, Object> login(@RequestParam("email") String auth_User, @RequestParam("password") String password, HttpSession session) {
         Map<String, Object> result = new HashMap<>();
         AuthUsersEntity authUsers = new AuthUsersEntity();
-
+        authUsers.setUser_password(password);
         if (EMAIL_PATTERN.matcher(auth_User).matches()) {
             authUsers.setUser_email(auth_User);
+            if (authUsersSerivce.authenticateUser(authUsers)) {
+                session.setAttribute("User_name", authUsers.getUser_email());
+                result.put("code", 200);
+                result.put("message", "登录成功");
+                result.put("redirectUrl", "/Star_Home");
+                logger.info("登陆成功！");
+            } else {
+                result.put("code", 401);
+                result.put("message", "用户名或密码错误");
+            }
         } else if (PHONE_PATTERN.matcher(auth_User).matches()) {
             authUsers.setUser_iphone(auth_User);
+            if (authUsersSerivce.authenticateUser(authUsers)) {
+                session.setAttribute("User_name", authUsers.getUser_iphone());
+                result.put("code", 200);
+                result.put("message", "登录成功");
+                result.put("redirectUrl", "/Star_Home");
+                logger.info("登陆成功！");
+            } else {
+                result.put("code", 401);
+                result.put("message", "用户名或密码错误");
+            }
         } else {
             authUsers.setUser_name(auth_User);
-        }
-        authUsers.setUser_password(password);
-        if (authUsersSerivce.authenticateUser(authUsers)) {
-            session.setAttribute("User_name", authUsers.getUser_name());
-            result.put("code", 200);
-            result.put("message", "登录成功");
-            result.put("redirectUrl", "/Star_Home");
-            logger.info("登陆成功！");
-        } else {
-            result.put("code", 401);
-            result.put("message", "用户名或密码错误");
+            if (authUsersSerivce.authenticateUser(authUsers)) {
+                session.setAttribute("User_name", authUsers.getUser_name());
+                result.put("code", 200);
+                result.put("message", "登录成功");
+                result.put("redirectUrl", "/Star_Home");
+                logger.info("登陆成功！");
+            } else {
+                result.put("code", 401);
+                result.put("message", "用户名或密码错误");
+            }
         }
         return result;
     }
