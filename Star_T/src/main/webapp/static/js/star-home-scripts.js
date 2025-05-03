@@ -87,7 +87,20 @@ function handleZhuyeClick() {
                     }
                     if (personImg) {
                         // console.log('成功获取到 personImg_img 元素:', personImg);
-                        fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1image, skill2image, skill3image);
+                        fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1image, skill2image, skill3image)
+                            .then(() => {
+                                const loader = iframeDoc.querySelector('.loader');
+                                if (loader) {
+                                    loader.style.transition = 'opacity 2s ease-out';
+                                    loader.style.opacity = '0';
+                                    setTimeout(() => {
+                                        loader.style.display = 'none';
+                                    }, 100);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('fetchRandomGod 执行失败:', error);
+                            });
                         // 在这里可以对 personImg_img 元素进行操作
                     } else {
                         console.log('未找到 personImg_img 元素，尝试使用 MutationObserver 监听');
@@ -105,14 +118,27 @@ function handleZhuyeClick() {
                                         // 不再需要监听，断开连接
                                         observer.disconnect();
                                         // 在这里可以对 newPersonImg 元素进行操作
-                                        fetchRandomGod(requestUrl, personDiv, newPersonImg, personName, skill1image, skill2image, skill3image);
+                                        fetchRandomGod(requestUrl, personDiv, newPersonImg, personName, skill1image, skill2image, skill3image)
+                                            .then(() => {
+                                                const loader = iframeDoc.querySelector('.loader');
+                                                if (loader) {
+                                                    loader.style.transition = 'opacity 2s ease-out';
+                                                    loader.style.opacity = '0';
+                                                    setTimeout(() => {
+                                                        loader.style.display = 'none';
+                                                    }, 100);
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('fetchRandomGod 执行失败:', error);
+                                            });
                                     }
                                 }
                             }
                         });
                         observer.observe(iframeDoc.body, {childList: true, subtree: true});
                     }
-                }, 10); // 延迟 1000 毫秒，可根据实际情况调整
+                }, 100); // 延迟 1000 毫秒，可根据实际情况调整
 
                 // 移除 iframe 加载事件监听器，防止重复触发
                 iframe.removeEventListener('load', iframeLoadHandler);
@@ -154,39 +180,45 @@ fetch(requestUrl + '/currentUser').then(response => response.json()).then(data =
  * 随机式神展示方法
  */
 function fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1image, skill2image, skill3image) {
-    fetch(requestUrl + '/getRandomGod', {method: 'GET'}).then(response => response.json()).then(data => {
-        console.info(data);
-        personImg.src = data.godavatar;
-        switch (data.god_rarity) {
-            case 1:
-                personDiv.style.backgroundColor = "#bbe0ec";
-                break;
-            case 2:
-                personDiv.style.backgroundColor = "#76c33a";
-                break;
-            case 3:
-                personDiv.style.backgroundColor = "#7900da";
-                break;
-            case 4:
-                personDiv.style.backgroundColor = "#fabe41";
-                break;
-            case 5:
-                personDiv.style.backgroundColor = "#bd0000";
-                break;
-            default :
-                personDiv.style.backgroundColor = "#ffffff";
-        }
-        personImg.title = data.god_name;
-        personName.querySelector("span").textContent = data.god_name;
-        skill1image.src = data.skill1icon;
-        skill2image.src = data.skill2icon;
-        skill3image.src = data.skill3icon;
-        skill1image.title = data.skill1name;
-        skill2image.title = data.skill2name;
-        skill3image.title = data.skill3name;
-    });
+    return fetch(requestUrl + '/getRandomGod', { method: 'GET' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.info(data);
+            personImg.src = data.godavatar;
+            switch (data.god_rarity) {
+                case 1:
+                    personDiv.style.backgroundColor = "#bbe0ec";
+                    break;
+                case 2:
+                    personDiv.style.backgroundColor = "#76c33a";
+                    break;
+                case 3:
+                    personDiv.style.backgroundColor = "#7900da";
+                    break;
+                case 4:
+                    personDiv.style.backgroundColor = "#fabe41";
+                    break;
+                case 5:
+                    personDiv.style.backgroundColor = "#bd0000";
+                    break;
+                default:
+                    personDiv.style.backgroundColor = "#ffffff";
+            }
+            personImg.title = data.god_name;
+            personName.querySelector("span").textContent = data.god_name;
+            skill1image.src = data.skill1icon;
+            skill2image.src = data.skill2icon;
+            skill3image.src = data.skill3icon;
+            skill1image.title = data.skill1name;
+            skill2image.title = data.skill2name;
+            skill3image.title = data.skill3name;
+        });
 }
-
 /**
  * 遍历左边菜单栏 添加点击时的样式
  */

@@ -121,9 +121,9 @@ public class Star_FirstController {
         return "/Star_Context";
     }
 
-    @RequestMapping("/other")
-    public String other() {
-        return "/other";
+    @RequestMapping("/godinformation")
+    public String godinformation() {
+        return "/godinformation";
     }
 
     @GetMapping("/getGodCount")

@@ -12,6 +12,9 @@
 <div id="container"></div>
 <%--存放随机式神--%>
 <div class="random_person" id="random_person">
+    <div class="loader">
+        <div data-glitch="正在加载随机式神......" class="glitch">正在加载随机式神......</div>
+    </div>
     <%--通过接口获取随机的头像--%>
     <div id="personImg_div">
         <img id="personImg_img" alt="加载失败" src="" crossorigin="anonymous">
