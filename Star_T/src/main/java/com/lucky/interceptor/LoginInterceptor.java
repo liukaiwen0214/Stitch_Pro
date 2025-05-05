@@ -32,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("{\"code\":401, \"message\":\"未登录\"}");
             } else {
-                response.sendRedirect("/Star_Login.jsp");
+                response.sendRedirect("/LoginPage.jsp");
             }
             return false;
         }

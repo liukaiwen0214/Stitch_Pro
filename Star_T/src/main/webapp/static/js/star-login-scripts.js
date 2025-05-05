@@ -27,7 +27,7 @@ document.getElementById('loginForm').onsubmit = function(e) {
     }, 20);
 
     // 发送登录请求
-    fetch(requestUrl + '/login', {
+    fetch(requestUrl + '/UserAuth/login', {
         method: 'POST',
         body: new URLSearchParams(formData)
     })

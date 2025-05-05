@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
  *
  */
 function logout() {
-    fetch(requestUrl + '/logout', {method: 'POST'})
-        .then(() => window.location.href = requestUrl + '/Star_Home');
+    fetch(requestUrl + '/UserAuth/logout', {method: 'POST'})
+        .then(() => window.location.href = requestUrl + '/MainMenu/MainMenu');
 }
 
 //监控按钮是否被点击
@@ -61,7 +61,7 @@ function handleZhuyeClick() {
     // 创建 XMLHttpRequest 对象
     const xhr = new XMLHttpRequest();
     // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
-    xhr.open('GET', requestUrl + "/home_context", true);
+    xhr.open('GET', requestUrl + "/MainPage/MainPageContent", true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // 获取 iframe 元素
@@ -169,7 +169,7 @@ if (zhuye) {
 /**
  * 当页面加载时判断登陆状态
  */
-fetch(requestUrl + '/currentUser').then(response => response.json()).then(data => {
+fetch(requestUrl + '/UserAuth/currentUser').then(response => response.json()).then(data => {
     if (data.code !== 200) {
         history.pushState({}, 'Home', requestUrl + '/');
         window.location.href = requestUrl + '/';
@@ -180,7 +180,7 @@ fetch(requestUrl + '/currentUser').then(response => response.json()).then(data =
  * 随机式神展示方法
  */
 function fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1image, skill2image, skill3image) {
-    return fetch(requestUrl + '/getRandomGod', { method: 'GET' })
+    return fetch(requestUrl + '/ShikigmainDisplay/randshikigma', { method: 'GET' })
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -283,7 +283,7 @@ listItems.forEach(item => {
  * @param container 饼状图的位置
  */
 function getcanvas(rarityColors, requestUrl, container) {
-    fetch(requestUrl + '/getGodCount').then(response => response.json()).then(data => {
+    fetch(requestUrl + '/ShikigmainDisplay/reckoning').then(response => response.json()).then(data => {
         const echartsData = data.map(item => ({
             value: item.count, name: item.rarity, itemStyle: {
                 color: rarityColors[item.rarity]

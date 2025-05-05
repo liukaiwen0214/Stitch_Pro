@@ -13,10 +13,10 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/login",// 排除登录接口
-                        "/Star_Login.jsp",// 排除登录页面
+                        "/UserAuth/login",// 排除登录接口
+                        "/LoginPage.jsp",// 排除登录页面
                         "/static/**",// 排除静态资源
-                        "/Star_Home"// 排除 Star_Home 接口
+                        "/MainMenu"// 排除 Star_Home 接口
                 );
     }
 }
