@@ -13,4 +13,5 @@ public class RandomGodThreeClassEntity {
     private GodBasicInformationEntity gbi;
     private GodBiographies gb;
     private GodSkillBasicBeforeAwakeningEntity gsbba;
+    private GodSkillDetailAfterAwakeningEntity gsdaa;
 }

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 主页菜单
  */
-@Controller("/MainMenu")
+@Controller
+@RequestMapping("/MainMenu")
 public class MainMenuController {
     //    private final PossessGodService pgs;
     private final Logger logger = LoggerFactory.getLogger(MainMenuController.class.getName());

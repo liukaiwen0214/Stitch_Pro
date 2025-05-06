@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/star-loader-style.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/resourcepreloader.css">
 </head>
 <body>
     <div id="progress-bar">
@@ -17,6 +17,6 @@
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/star-login-scripts.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/loginpage.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/global.js"></script>
 </html>

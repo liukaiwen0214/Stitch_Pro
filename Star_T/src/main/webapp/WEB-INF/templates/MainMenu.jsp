@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <html>
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/star-home-style.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mainmenu.css">
 <body>
 
 <div id="Bast_1">
@@ -154,8 +154,7 @@
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/overall-situation.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/mainmenu.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/global.js"></script>
 <script src="${pageContext.request.contextPath}/static/utils/echarts.min.js"></script>
 </html>

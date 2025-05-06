@@ -1,6 +1,6 @@
 package com.lucky.controller;
 
-import com.lucky.entity.RandomGodEntity;
+import com.lucky.entity.DetailedGodEntity;
 import com.lucky.service.PossessGodService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,8 @@ import java.util.Map;
 /**
  * 式神页面
  */
-@Controller("/ShikigmainDisplay")
+@Controller
+@RequestMapping("/ShikigmainDisplay")
 public class ShikigmainDisplayController {
     private final PossessGodService possessGodService;
     private final Logger logger = LoggerFactory.getLogger(ShikigmainDisplayController.class.getName());
@@ -36,9 +37,12 @@ public class ShikigmainDisplayController {
         logger.info("获取式神稀有度数量统计成功！");
         return possessGodService.godCount();
     }
+
     @GetMapping("/randshikigma")
     @ResponseBody
-    public RandomGodEntity getRandomGod() {
-        return possessGodService.random_god();
+    public DetailedGodEntity getRandomGod() {
+        DetailedGodEntity god = possessGodService.random_god();
+        logger.info("查询随机式神成功，随机式神为:{}", god.getGod_name());
+        return god;
     }
 }

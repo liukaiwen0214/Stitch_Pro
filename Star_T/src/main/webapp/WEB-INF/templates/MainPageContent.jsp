@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/star-context-style.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/mainpagecontent.css">
 <body>
 <div id="container"></div>
 <%--存放随机式神--%>
@@ -74,7 +74,7 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/utils/echarts.min.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/generateData.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/star-home-scripts.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/chats-scripts.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/global.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/mainmenu.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/mainpagecontent.js"></script>
 </html>

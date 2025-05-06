@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>阴阳师式神展示</title>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/godinformation.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/shikigamidispalypage.css">
 </head>
 
 <body class="bg-gray-100">
@@ -30,5 +30,5 @@
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/static/js/godinformation.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/static/js/shikigamidispalypage.js"></script>
 </html>

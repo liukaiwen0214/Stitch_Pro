@@ -1,6 +1,6 @@
 package com.lucky.service;
 
-import com.lucky.entity.RandomGodEntity;
+import com.lucky.entity.DetailedGodEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -10,10 +10,15 @@ import java.util.Map;
  */
 public interface PossessGodService {
     /**
-     * 获取所有的式神计数，将数据传递给前端，实现图标
+     * 获取所有的式神计数，将数据传递给前端，实现图饼展示
      * @return [[R,20],[SR,20]......]
      */
     List<Map<String, Object>> godCount();
 
-    RandomGodEntity random_god();
+    /**
+     * 获取主页随机式神
+     * @return 一个随机式神对象
+     */
+    DetailedGodEntity random_god();
+
 }

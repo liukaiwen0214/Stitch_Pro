@@ -17,7 +17,8 @@ import java.util.regex.Pattern;
 /**
  * 用户登陆退出
  */
-@Controller("/UserAuth")
+@Controller
+@RequestMapping("/UserAuth")
 public class UserAuthController {
     private final AuthUsersSerivce authUsersSerivce;// 声明为 final（不可变）
 

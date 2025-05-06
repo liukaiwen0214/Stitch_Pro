@@ -14,7 +14,8 @@ import java.util.Map;
 /**
  * 首页
  */
-@Controller("/MainPage")
+@Controller
+@RequestMapping("/MainPage")
 public class MainPageContentController {
 
     @RequestMapping("/MainPageContent")

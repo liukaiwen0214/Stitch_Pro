@@ -33,22 +33,71 @@
             <result property="skill_detail" column="skill_detail"/>
             <result property="skill_icon" column="skill_icon"/>
         </association>
+        <association property="gsdaa" javaType="com.lucky.entity.GodSkillDetailAfterAwakeningEntity">
+            <!-- 映射 gsbba 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="skill_id" column="skill_id"/>
+            <result property="skill_name" column="skill_name"/>
+            <result property="skill_detail" column="skill_detail"/>
+            <result property="skill_icon" column="skill_icon"/>
+            <result property="skill_add" column="skill_add"/>
+            <result property="skill_add_type" column="skill_add_type"/>
+        </association>
     </resultMap>
 
 
     <select id="getRandomGod" resultMap="RandomGodEntityMap">
-        SELECT
-            gbi.*,
-            gb.*,
-            gsbba.*
-        FROM
-            god_basic_information gbi
-                JOIN
-            god_biographies gb ON gbi.god_id = gb.god_id
-                JOIN
-            god_skill_basic_before_awakening gsbba ON gbi.god_id = gsbba.god_id
-        WHERE
-            gb.god_id = #{god_id}
-        ORDER BY gsbba.skill_id;
+        select
+            -- 使用基础信息表 id,name,rarity
+            gbi.god_id,
+            gbi.god_name,
+            god_rarity,
+            -- 使用传记表 story+n,cv
+            gb.god_cv,
+            gb.story1,
+            gb.story2,
+            gb.story3,
+            gb.story4,
+            gb.story5,
+            gb.story6,
+            gb.story7,
+            gb.story8,
+            gb.story9,
+            -- 使用觉醒前的技能
+            gsbba.skill_id,
+            gsbba.skill_name,
+            gsbba.skill_detail,
+            gsbba.skill_icon,
+            -- 使用觉醒后的技能
+            null as 'skill_add',
+            null as 'skill_add_type'
+        from god_basic_information gbi
+                 join god_biographies gb on gb.god_id = gbi.god_id
+                 join god_skill_basic_before_awakening gsbba on gsbba.god_id = gbi.god_id
+        where gbi.god_id = #{god_id}
+        UNION ALL
+-- 拼接觉醒后技能
+        select god_id,
+               null as 'god_name',
+               null as 'god_rarity',
+               null as 'god_cv',
+               null as 'story1',
+               null as 'story2',
+               null as 'story3',
+               null as 'story4',
+               null as 'story5',
+               null as 'story6',
+               null as 'story7',
+               null as 'story8',
+               null as 'story9',
+               skill_id,
+               skill_name,
+               skill_detail,
+               skill_icon,
+               skill_add,
+               skill_add_type
+        from god_skill_detail_after_awakening
+        where god_id = #{god_id}
+        ORDER BY IF(skill_id IS NULL, 1, 0), skill_id;
     </select>
 </mapper>

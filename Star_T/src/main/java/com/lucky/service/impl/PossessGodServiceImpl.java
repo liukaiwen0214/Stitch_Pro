@@ -2,7 +2,7 @@ package com.lucky.service.impl;
 
 import com.lucky.entity.GodBasicInformationEntity;
 import com.lucky.entity.GodBiographies;
-import com.lucky.entity.RandomGodEntity;
+import com.lucky.entity.DetailedGodEntity;
 import com.lucky.entity.RandomGodThreeClassEntity;
 import com.lucky.mapper.GodBasicInformationMapper;
 import com.lucky.mapper.RandomGodThreeClassMapper;
@@ -47,10 +47,10 @@ public class PossessGodServiceImpl implements PossessGodService {
     }
 
     @Override
-    public RandomGodEntity random_god() {
-        RandomGodEntity rge = new RandomGodEntity();
+    public DetailedGodEntity random_god() {
+        DetailedGodEntity rge = new DetailedGodEntity();
+
         List<RandomGodThreeClassEntity> gods = rgtcm.getRandomGod(random_god_id());
-//        List<RandomGodThreeClassEntity> gods = rgtcm.getRandomGod(352);
         //式神ID
         rge.setGod_id(gods.get(0).getGbi().getGod_id());
         //式神名称
@@ -103,6 +103,12 @@ public class PossessGodServiceImpl implements PossessGodService {
         } else {
             logger.error("式神没有技能3");
         }
+        for (int skill = 0; skill < gods.size(); skill++) {
+            if (gods.get(skill).getGsdaa().getSkill_add() != null) {
+                rge.setSkill_add(gods.get(skill).getGsdaa().getSkill_add());
+                rge.setSkill_add_type(gods.get(skill).getGsdaa().getSkill_add_type());
+            }
+        }
         return rge;
     }
 
@@ -134,6 +140,10 @@ public class PossessGodServiceImpl implements PossessGodService {
         return map;
     }
 
+    /**
+     * 获取随机式神ID
+     * @return 式神ID
+     */
     public Integer random_god_id() {
         Random random = new Random();
         int randomIndex = random.nextInt(gbi.allGodId().size());
