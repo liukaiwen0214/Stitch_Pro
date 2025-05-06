@@ -24,7 +24,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
                 setTimeout(() => {
                     const botMessageDiv = document.createElement('div');
                     botMessageDiv.classList.add('message', 'bot-message');
-                    let resultHtml = '';
+                    // let resultHtml = '';
                     // 遍历 Map 中的键值对
                     for (const [key, value] of Object.entries(response)) {
                         botMessageDiv.innerHTML = `<p class="aip">${key}: ${value}</p>`;
@@ -45,7 +45,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
 function scrollToBottomSlowly(element) {
     const targetScrollTop = element.scrollHeight - element.clientHeight;
     const currentScrollTop = element.scrollTop;
-    const distance = targetScrollTop - currentScrollTop;
+    // const distance = targetScrollTop - currentScrollTop;
     const step = 10; // 每次滚动的步长
     const interval = 20; // 滚动间隔时间（毫秒）
 
