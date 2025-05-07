@@ -1,6 +1,7 @@
 package com.lucky.service;
 
 import com.lucky.entity.DetailedGodEntity;
+import com.lucky.entity.GodBasicInformationEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,9 @@ public interface PossessGodService {
      */
     DetailedGodEntity random_god();
 
+    /**
+     * 获取所有式神基本信息 式神ID、名称、稀有度
+     * @return 式神集合
+     */
+    List<GodBasicInformationEntity> getGodBasics();
 }

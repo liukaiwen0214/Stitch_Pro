@@ -180,7 +180,7 @@ fetch(requestUrl + '/UserAuth/currentUser').then(response => response.json()).th
  * 随机式神展示方法
  */
 function fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1image, skill2image, skill3image) {
-    return fetch(requestUrl + '/ShikigmainDisplay/randshikigma', { method: 'GET' })
+    return fetch(requestUrl + '/ShikigmainDisplay/randshikigma', {method: 'GET'})
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -219,6 +219,7 @@ function fetchRandomGod(requestUrl, personDiv, personImg, personName, skill1imag
             skill3image.title = data.skill3name;
         });
 }
+
 /**
  * 遍历左边菜单栏 添加点击时的样式
  */
@@ -339,27 +340,38 @@ function getcanvas(rarityColors, requestUrl, container) {
  * childs-kid的点击事件
  * 当点击时将context-d显示出来
  */
-childskid.forEach(childonclick => {
-    childonclick.addEventListener('click', function () {
-        const url = childonclick.getAttribute("data-menu");
-        // console.info(event)
-        // 创建 XMLHttpRequest 对象
-        const xhr = new XMLHttpRequest();
-        // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
-        xhr.open('GET', requestUrl + "/" + url, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // 获取 iframe 元素
-                const iframe = document.getElementById('context-d');
-                // 获取 iframe 的文档对象
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                // 将 AJAX 请求返回的内容设置到 iframe 的文档中
-                iframeDoc.open();
-                iframeDoc.write(xhr.responseText);
-                iframeDoc.close();
-            }
-        };
-        // 发送请求
-        xhr.send();
-    })
-})
+try {
+    childskid.forEach(childonclick => {
+        if (childonclick instanceof HTMLElement) {
+            childonclick.parentNode.addEventListener('click', function () {
+                const url = childonclick.getAttribute("data-menu");
+                // 创建 XMLHttpRequest 对象
+                const xhr = new XMLHttpRequest();
+                // 打开一个 GET 请求，这里假设后端有一个 /newPage 的接口返回页面内容
+                xhr.open('GET', requestUrl + "/" + url, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // 获取 iframe 元素
+                        const iframe = document.getElementById('context-d');
+                        if (iframe) {
+                            // 获取 iframe 的文档对象
+                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                            // 将 AJAX 请求返回的内容设置到 iframe 的文档中
+                            iframeDoc.open();
+                            iframeDoc.write(xhr.responseText);
+                            iframeDoc.close();
+                        } else {
+                            console.error('未找到 ID 为 context-d 的 iframe 元素');
+                        }
+                    }
+                };
+                // 发送请求
+                xhr.send();
+            });
+        } else {
+            console.error('childonclick 不是一个有效的 DOM 元素');
+        }
+    });
+} catch (error) {
+    console.error('发生错误:', error);
+}

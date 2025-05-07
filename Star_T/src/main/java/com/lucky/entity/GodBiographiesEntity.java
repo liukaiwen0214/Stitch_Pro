@@ -3,7 +3,7 @@ package com.lucky.entity;
 import lombok.Data;
 
 @Data
-public class GodBiographies {
+public class GodBiographiesEntity {
     //式神ID
     private Integer god_id;
     //式神cv

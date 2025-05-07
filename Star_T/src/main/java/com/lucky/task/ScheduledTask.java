@@ -14,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,7 +56,8 @@ public class ScheduledTask {
         System.out.println("定时任务执行时间: " + sdf.format(new Date()));
         // 这里可以添加你要执行的具体业务逻辑
         try {
-            URL url = new URL("https://yys.res.netease.com/pc/zt/20161108171335/js/app/all_shishen.json");
+            URI uri = new URI("https://yys.res.netease.com/pc/zt/20161108171335/js/app/all_shishen.json");
+            URL url = uri.toURL();
             String baseStoryUrl = "https://g37simulator.webapp.163.com/get_hero_story?heroid=";
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -101,10 +104,11 @@ public class ScheduledTask {
                     }
                 }
                 for (int i = 0; i < ids.size(); i++) {
-                    GodBiographies godBiographies = new GodBiographies();
+                    GodBiographiesEntity godBiographiesEntity = new GodBiographiesEntity();
                     // 每次循环重新初始化 storyUrl
                     String storyUrl = baseStoryUrl + ids.get(i);
-                    URL urls = new URL(storyUrl);
+                    URI uri1 = new URI(storyUrl);
+                    URL urls = uri1.toURL();
                     HttpURLConnection story = (HttpURLConnection) urls.openConnection();
                     story.setRequestMethod("GET");
                     int res = story.getResponseCode();
@@ -124,8 +128,8 @@ public class ScheduledTask {
                             continue;
                         }
                         // 提取 cv 和 story 信息
-                        godBiographies.setGod_cv(data.getString("cv"));
-                        godBiographies.setGod_id(ids.get(i));
+                        godBiographiesEntity.setGod_cv(data.getString("cv"));
+                        godBiographiesEntity.setGod_id(ids.get(i));
                         List<String> storyList = data.getList("story", String.class);
                         if (storyList != null) {
 //                            logger.info("storyList的长度是：" + storyList.size());
@@ -134,76 +138,76 @@ public class ScheduledTask {
                                     System.out.println("式神没有传记");
                                     break;
                                 case 1:
-                                    godBiographies.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
                                     break;
                                 case 2:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
                                     break;
                                 case 3:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
-                                    godBiographies.setStory3(storyList.get(2));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory3(storyList.get(2));
                                     break;
                                 case 4:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
-                                    godBiographies.setStory3(storyList.get(2));
-                                    godBiographies.setStory4(storyList.get(3));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory3(storyList.get(2));
+                                    godBiographiesEntity.setStory4(storyList.get(3));
                                     break;
                                 case 5:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
-                                    godBiographies.setStory3(storyList.get(2));
-                                    godBiographies.setStory4(storyList.get(3));
-                                    godBiographies.setStory5(storyList.get(4));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory3(storyList.get(2));
+                                    godBiographiesEntity.setStory4(storyList.get(3));
+                                    godBiographiesEntity.setStory5(storyList.get(4));
                                     break;
                                 case 6:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
-                                    godBiographies.setStory3(storyList.get(2));
-                                    godBiographies.setStory4(storyList.get(3));
-                                    godBiographies.setStory5(storyList.get(4));
-                                    godBiographies.setStory6(storyList.get(5));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory3(storyList.get(2));
+                                    godBiographiesEntity.setStory4(storyList.get(3));
+                                    godBiographiesEntity.setStory5(storyList.get(4));
+                                    godBiographiesEntity.setStory6(storyList.get(5));
                                     break;
                                 case 7:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
-                                    godBiographies.setStory3(storyList.get(2));
-                                    godBiographies.setStory4(storyList.get(3));
-                                    godBiographies.setStory5(storyList.get(4));
-                                    godBiographies.setStory6(storyList.get(5));
-                                    godBiographies.setStory7(storyList.get(6));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory3(storyList.get(2));
+                                    godBiographiesEntity.setStory4(storyList.get(3));
+                                    godBiographiesEntity.setStory5(storyList.get(4));
+                                    godBiographiesEntity.setStory6(storyList.get(5));
+                                    godBiographiesEntity.setStory7(storyList.get(6));
                                     break;
                                 case 8:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
-                                    godBiographies.setStory3(storyList.get(2));
-                                    godBiographies.setStory4(storyList.get(3));
-                                    godBiographies.setStory5(storyList.get(4));
-                                    godBiographies.setStory6(storyList.get(5));
-                                    godBiographies.setStory7(storyList.get(6));
-                                    godBiographies.setStory8(storyList.get(7));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory3(storyList.get(2));
+                                    godBiographiesEntity.setStory4(storyList.get(3));
+                                    godBiographiesEntity.setStory5(storyList.get(4));
+                                    godBiographiesEntity.setStory6(storyList.get(5));
+                                    godBiographiesEntity.setStory7(storyList.get(6));
+                                    godBiographiesEntity.setStory8(storyList.get(7));
                                     break;
                                 case 9:
-                                    godBiographies.setStory1(storyList.get(0));
-                                    godBiographies.setStory2(storyList.get(1));
-                                    godBiographies.setStory3(storyList.get(2));
-                                    godBiographies.setStory4(storyList.get(3));
-                                    godBiographies.setStory5(storyList.get(4));
-                                    godBiographies.setStory6(storyList.get(5));
-                                    godBiographies.setStory7(storyList.get(6));
-                                    godBiographies.setStory8(storyList.get(7));
-                                    godBiographies.setStory9(storyList.get(8));
+                                    godBiographiesEntity.setStory1(storyList.get(0));
+                                    godBiographiesEntity.setStory2(storyList.get(1));
+                                    godBiographiesEntity.setStory3(storyList.get(2));
+                                    godBiographiesEntity.setStory4(storyList.get(3));
+                                    godBiographiesEntity.setStory5(storyList.get(4));
+                                    godBiographiesEntity.setStory6(storyList.get(5));
+                                    godBiographiesEntity.setStory7(storyList.get(6));
+                                    godBiographiesEntity.setStory8(storyList.get(7));
+                                    godBiographiesEntity.setStory9(storyList.get(8));
                                     break;
                             }
-                            if (gbm.consultGodStory(godBiographies.getGod_id()) > 0) {
-                                logger.info(godBiographies.getGod_id() + "在数据库中存在！");
+                            if (gbm.consultGodStory(godBiographiesEntity.getGod_id()) > 0) {
+                                logger.info(godBiographiesEntity.getGod_id() + "在数据库中存在！");
                             } else {
-                                if (gbm.increaseGodStory(godBiographies) > 0) {
-                                    System.out.println(godBiographies.getGod_id() + "添加成功！");
+                                if (gbm.increaseGodStory(godBiographiesEntity) > 0) {
+                                    System.out.println(godBiographiesEntity.getGod_id() + "添加成功！");
                                 } else {
-                                    System.out.println(godBiographies.getGod_id() + "添加失败");
+                                    System.out.println(godBiographiesEntity.getGod_id() + "添加失败");
                                 }
                             }
                         } else {
@@ -213,7 +217,7 @@ public class ScheduledTask {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
         acquisition_skills();
@@ -233,7 +237,9 @@ public class ScheduledTask {
             for (int idcount = 0; idcount < allGodId.size(); idcount++) {
                 String basicUrl = "https://g37simulator.webapp.163.com/get_hero_skill?awake=0&level=0&star=2&heroid=";
                 basicUrl = basicUrl + allGodId.get(idcount);
-                URL basicSkillUrl = new URL(basicUrl);
+
+                URI uri = new URI(basicUrl);
+                URL basicSkillUrl = uri.toURL();
                 HttpURLConnection connection = (HttpURLConnection) basicSkillUrl.openConnection();
                 connection.setRequestMethod("GET");
                 int responseCode = connection.getResponseCode();
@@ -288,7 +294,7 @@ public class ScheduledTask {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -329,7 +335,8 @@ public class ScheduledTask {
                 String basicUrl = "https://g37simulator.webapp.163.com/get_hero_skill?awake=1&level=0&star=2&heroid=";
                 basicUrl = basicUrl + allGodId.get(idcount);
 //                System.out.println(basicUrl);
-                URL basicSkillUrl = new URL(basicUrl);
+                URI uri = new URI(basicUrl);
+                URL basicSkillUrl = uri.toURL();
                 HttpURLConnection connection = (HttpURLConnection) basicSkillUrl.openConnection();
                 connection.setRequestMethod("GET");
                 int responseCode = connection.getResponseCode();
@@ -438,7 +445,7 @@ public class ScheduledTask {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }

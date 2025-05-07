@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class RandomGodThreeClassEntity {
     private GodBasicInformationEntity gbi;
-    private GodBiographies gb;
+    private GodBiographiesEntity gb;
     private GodSkillBasicBeforeAwakeningEntity gsbba;
     private GodSkillDetailAfterAwakeningEntity gsdaa;
 }

@@ -1,7 +1,7 @@
 package com.lucky.service.impl;
 
 import com.lucky.entity.GodBasicInformationEntity;
-import com.lucky.entity.GodBiographies;
+import com.lucky.entity.GodBiographiesEntity;
 import com.lucky.entity.DetailedGodEntity;
 import com.lucky.entity.RandomGodThreeClassEntity;
 import com.lucky.mapper.GodBasicInformationMapper;
@@ -19,13 +19,13 @@ import java.util.stream.IntStream;
 
 @Service
 public class PossessGodServiceImpl implements PossessGodService {
-    private final GodBasicInformationMapper gbi;
+    private final GodBasicInformationMapper gbim;
     private final RandomGodThreeClassMapper rgtcm;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public PossessGodServiceImpl(GodBasicInformationMapper gbi, RandomGodThreeClassMapper rgtcm) {
-        this.gbi = gbi;
+    public PossessGodServiceImpl(GodBasicInformationMapper gbim, RandomGodThreeClassMapper rgtcm) {
+        this.gbim = gbim;
         this.rgtcm = rgtcm;
     }
 
@@ -62,7 +62,7 @@ public class PossessGodServiceImpl implements PossessGodService {
         //式神传记
         List<String> storys = IntStream.rangeClosed(1, 9).mapToObj(i -> {
             try {
-                Method method = GodBiographies.class.getMethod("getStory" + i);
+                Method method = GodBiographiesEntity.class.getMethod("getStory" + i);
                 return (String) method.invoke(gods.get(0).getGb());
             } catch (Exception e) {
                 logger.error("Stream API 反射GodBiographies类失败");
@@ -112,13 +112,18 @@ public class PossessGodServiceImpl implements PossessGodService {
         return rge;
     }
 
+    @Override
+    public List<GodBasicInformationEntity> getGodBasics() {
+        return gbim.getGods();
+    }
+
     /**
      * 查询数据库，将不同的稀有度的式神数量统计出来
      *
      * @return [N, 12], [R, 20]......
      */
     public Map<String, Integer> getGodList() {
-        List<GodBasicInformationEntity> rarity = gbi.getGodRarity();
+        List<GodBasicInformationEntity> rarity = gbim.getGods();
         //创建map集合用来存放获取的计数信息
         Map<String, Integer> map = new HashMap<>();
         // 计数
@@ -146,7 +151,7 @@ public class PossessGodServiceImpl implements PossessGodService {
      */
     public Integer random_god_id() {
         Random random = new Random();
-        int randomIndex = random.nextInt(gbi.allGodId().size());
-        return gbi.allGodId().get(randomIndex);
+        int randomIndex = random.nextInt(gbim.allGodId().size());
+        return gbim.allGodId().get(randomIndex);
     }
 }

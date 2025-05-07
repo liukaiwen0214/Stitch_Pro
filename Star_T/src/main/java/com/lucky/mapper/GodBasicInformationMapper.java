@@ -34,5 +34,5 @@ public interface GodBasicInformationMapper {
      * 获取所有式神信息
      * @return 式神集合
      */
-    List<GodBasicInformationEntity> getGodRarity();
+    List<GodBasicInformationEntity> getGods();
 }

@@ -11,7 +11,7 @@
             <result property="god_name" column="god_name"/>
             <result property="god_rarity" column="god_rarity"/>
         </association>
-        <association property="gb" javaType="com.lucky.entity.GodBiographies">
+        <association property="gb" javaType="com.lucky.entity.GodBiographiesEntity">
             <!-- 映射 gb 表的列 -->
             <id property="god_id" column="god_id"/>
             <result property="god_cv" column="god_cv"/>
