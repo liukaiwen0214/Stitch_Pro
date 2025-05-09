@@ -1,31 +1,6 @@
-body {
-    font-family: 'Inter', sans-serif;
-}
+@import url("https://fontsapi.zeoseven.com/235/main/result.css");
 
-.active {
-    background-color: #3b82f6;
-    color: white;
-}
-button {
-    width: fit-content;
-    min-width: 100px;
-    height: 45px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 3px solid #E0E1E4;
-    box-shadow: 0 0 20px -20px;
-    cursor: pointer;
-    background-color: white;
-    transition: all 0.2s ease-in-out 0ms;
-    user-select: none;
-    font-family: 'Poppins', sans-serif;
-}
+/* 小屏幕设备 */
+@media screen and (min-width: 768px) {
 
-button:hover {
-    background-color: #F2F2F2;
-    box-shadow: 0 0 20px -18px;
-}
-
-button:active {
-    transform: scale(0.95);
 }

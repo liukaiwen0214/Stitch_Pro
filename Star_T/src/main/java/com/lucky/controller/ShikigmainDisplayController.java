@@ -34,6 +34,10 @@ public class ShikigmainDisplayController {
     public String godinformation() {
         return "/ShikigamiDisplayPage";
     }
+    @RequestMapping("/temporaryTestPage")
+    public String temporaryTestPage() {
+        return "/MainMenu-New";
+    }
 
     @GetMapping("/reckoning")
     @ResponseBody

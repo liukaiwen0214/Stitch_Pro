@@ -39,7 +39,7 @@
             <div class="dropdown-content">
                 <ul>
                     <li><span class="menu_p childs-kid" data-menu="ShikigmainDisplay/shikigamis">所有式神</span></li>
-                    <li><span class="menu_p childs-kid">子菜单 1-2</span></li>
+                    <li><span class="menu_p childs-kid" data-menu="ShikigmainDisplay/temporaryTestPage">子菜单 1-2</span></li>
                 </ul>
             </div>
         </a>
