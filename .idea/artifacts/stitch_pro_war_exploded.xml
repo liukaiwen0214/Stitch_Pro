@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="stitch_pro:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/stitch_pro_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="stitch_pro/web/Web" />
+    </root>
+  </artifact>
+</component>

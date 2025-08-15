@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lucky.mapper.AuthUserEntityMapper">
+    <!--
+    新增一个用户
+    -->
+    <insert id="increaseUser">
+        insert into auth_users(user_id, user_name, user_email, user_password, user_iphone,user_descriptive)
+        values (#{user_id}, #{user_name}, #{user_email},
+                #{user_password}, #{user_descriptive}, #{user_iphone});
+    </insert>
+    <!--
+    通过用户名/邮箱/手机号+密码查询数据库中是否存在对应的用户；
+    username, password, email, phone
+    -->
+    <select id="authenticateUser" resultType="java.lang.Integer">
+        select count(*)
+        from auth_users
+        where (auth_users.user_name = #{user_name} and auth_users.user_password = #{user_password})
+           or (auth_users.user_email = #{user_email} and auth_users.user_password = #{user_password})
+           or (auth_users.user_iphone = #{user_iphone} and auth_users.user_password = #{user_password})
+    </select>
+    <select id="consultUser" resultType="java.lang.Integer">
+        select count(*)
+        from auth_users
+        where (auth_users.user_iphone = #{user_iphone})
+           or (auth_users.user_email = #{user_email})
+           or (auth_users.user_name = #{user_name})
+    </select>
+    <select id="consultUser_id" resultType="java.lang.Integer">
+        select max(user_id)
+        from auth_users;
+    </select>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lucky.mapper.RandomGodThreeClassMapper">
+    <resultMap id="RandomGodEntityMap" type="com.lucky.entity.RandomGodThreeClassEntity">
+        <association property="gbi" javaType="com.lucky.entity.GodBasicInformationEntity">
+            <!-- 映射 gbi 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="god_name" column="god_name"/>
+            <result property="god_rarity" column="god_rarity"/>
+        </association>
+        <association property="gb" javaType="com.lucky.entity.GodBiographiesEntity">
+            <!-- 映射 gb 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="god_cv" column="god_cv"/>
+            <result property="story1" column="story1"/>
+            <result property="story2" column="story2"/>
+            <result property="story3" column="story3"/>
+            <result property="story4" column="story4"/>
+            <result property="story5" column="story5"/>
+            <result property="story6" column="story6"/>
+            <result property="story7" column="story7"/>
+            <result property="story8" column="story8"/>
+            <result property="story9" column="story9"/>
+        </association>
+        <association property="gsbba" javaType="com.lucky.entity.GodSkillBasicBeforeAwakeningEntity">
+            <!-- 映射 gsbba 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="skill_id" column="skill_id"/>
+            <result property="skill_name" column="skill_name"/>
+            <result property="skill_detail" column="skill_detail"/>
+            <result property="skill_icon" column="skill_icon"/>
+        </association>
+        <association property="gsdaa" javaType="com.lucky.entity.GodSkillDetailAfterAwakeningEntity">
+            <!-- 映射 gsbba 表的列 -->
+            <id property="god_id" column="god_id"/>
+            <result property="skill_id" column="skill_id"/>
+            <result property="skill_name" column="skill_name"/>
+            <result property="skill_detail" column="skill_detail"/>
+            <result property="skill_icon" column="skill_icon"/>
+            <result property="skill_add" column="skill_add"/>
+            <result property="skill_add_type" column="skill_add_type"/>
+        </association>
+    </resultMap>
+
+
+    <select id="getRandomGod" resultMap="RandomGodEntityMap">
+        select
+            -- 使用基础信息表 id,name,rarity
+            gbi.god_id,
+            gbi.god_name,
+            god_rarity,
+            -- 使用传记表 story+n,cv
+            gb.god_cv,
+            gb.story1,
+            gb.story2,
+            gb.story3,
+            gb.story4,
+            gb.story5,
+            gb.story6,
+            gb.story7,
+            gb.story8,
+            gb.story9,
+            -- 使用觉醒前的技能
+            gsbba.skill_id,
+            gsbba.skill_name,
+            gsbba.skill_detail,
+            gsbba.skill_icon,
+            -- 使用觉醒后的技能
+            null as 'skill_add',
+            null as 'skill_add_type'
+        from god_basic_information gbi
+                 join god_biographies gb on gb.god_id = gbi.god_id
+                 join god_skill_basic_before_awakening gsbba on gsbba.god_id = gbi.god_id
+        where gbi.god_id = #{god_id}
+        UNION ALL
+-- 拼接觉醒后技能
+        select god_id,
+               null as 'god_name',
+               null as 'god_rarity',
+               null as 'god_cv',
+               null as 'story1',
+               null as 'story2',
+               null as 'story3',
+               null as 'story4',
+               null as 'story5',
+               null as 'story6',
+               null as 'story7',
+               null as 'story8',
+               null as 'story9',
+               skill_id,
+               skill_name,
+               skill_detail,
+               skill_icon,
+               skill_add,
+               skill_add_type
+        from god_skill_detail_after_awakening
+        where god_id = #{god_id}
+        ORDER BY IF(skill_id IS NULL, 1, 0), skill_id;
+    </select>
+</mapper>

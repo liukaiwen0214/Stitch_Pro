@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lucky.mapper.GodSkillDetailAfterAwakeningMapper">
+    <insert id="addSkillBasicBeforeAwakening">
+        insert into god_skill_detail_after_awakening(god_id, skill_id, skill_name, skill_detail, skill_icon,
+                                                     skill_add_type, skill_add)
+        VALUES (#{god_id}, #{skill_id}, #{skill_name}, #{skill_detail}, #{skill_icon}, #{skill_add_type}, #{skill_add})
+    </insert>
+    <update id="updateSkillBasicBeforAwakening">
+        update god_skill_detail_after_awakening
+        set god_id=#{god_id},
+            skill_id=#{skill_id},
+            skill_name=#{skill_name},
+            skill_detail=#{skill_detail},
+            skill_icon=#{skill_icon},
+            skill_add_type=#{skill_add_type},
+            skill_add=#{skill_add}
+        WHERE god_id = #{god_id};
+    </update>
+
+    <select id="consultSkillId" resultType="java.lang.Integer">
+        select count(*)
+        from god_skill_detail_after_awakening
+        where skill_id = #{skill_id}
+    </select>
+    <select id="consultGodId" resultType="java.lang.Integer">
+        select count(*)
+        from god_skill_detail_after_awakening
+        where god_id = #{god_id}
+    </select>
+    <select id="consultIcon" resultType="java.lang.String">
+        SELECT skill_icon
+        FROM (SELECT skill_icon
+              FROM god_skill_detail_after_awakening
+              WHERE skill_icon IS NOT NULL
+              UNION
+              SELECT skill_icon
+              FROM god_skill_basic_before_awakening
+              WHERE skill_icon IS NOT NULL) AS combined_icons;
+    </select>
+</mapper>
